@@ -14,7 +14,7 @@
       v-loading.fullscreen.lock="loading"
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
-      class="car-list card-grid flex"
+      class="car-list card-grid flex clean-list"
     >
       <car-preview
         v-for="car in cars"

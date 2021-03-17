@@ -157,9 +157,9 @@ function _createCars() {
     }
     const cars = JSON.parse(localStorage.getItem(CAR_KEY)) || []
     if (!cars || !cars.length) {
-        for (let i=0;i<100;i++){
-            cars.push(_createCar());
-        }
+        // for (let i=0;i<100;i++){
+        //     cars.push(_createCar());
+        // }
         cars.unshift(_createDemoCar1());
         cars.unshift(_createDemoCar2());
         cars.unshift(_createDemoCar3());
@@ -294,10 +294,10 @@ function _createDemoCar1(){
             'Adaptive headlights'],
         owner: makeRandomUser(usersDemo),
         imgUrls: [
-            '@/assents/images/' + _id + '/1.jpg',
-            '@/assents/images/' + _id + '/2.jpeg',
-            '@/assents/images/' + _id + '/3.jpeg',
-            '@/assents/images/' + _id + '/4.jpeg'],
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpeg',
+            'images/' + _id + '/3.jpeg',
+            'images/' + _id + '/4.jpeg'],
         location: {
             address: 'Chicago, IL 60634',
             lat: 41.950401,
@@ -377,10 +377,10 @@ function _createDemoCar2(){
             'Sport-tuned suspension'],
         owner: makeRandomUser(usersDemo),
         imgUrls: [
-            '@/assents/images/' + _id + '/1.jpg',
-            '@/assents/images/' + _id + '/2.jpg',
-            '@/assents/images/' + _id + '/3.jpg',
-            '@/assents/images/' + _id + '/4.jpg'],
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/4.jpg'],
         location: {
             address: 'Martinez, CA 94553',
             lat: 37.992489,
@@ -460,10 +460,10 @@ function _createDemoCar3(){
             'Leather upholstery'],
         owner: makeRandomUser(usersDemo),
         imgUrls: [
-            '@/assents/images/' + _id + '/1.jpg',
-            '@/assents/images/' + _id + '/2.jpg',
-            '@/assents/images/' + _id + '/3.jpg',
-            '@/assents/images/' + _id + '/4.jpg'],
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/4.jpg'],
         location: {
             address: 'Austin, TX 78750',
             lat: 30.430460,
