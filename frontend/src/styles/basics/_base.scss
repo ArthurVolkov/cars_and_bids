@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.6;
+    color: $clr2;
+}
+
+body {
+    margin: 0;
+    background-color: $clr4;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: serif;
+    margin: 0 0 1rem;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: rem(50px);
+}
+
+p {
+    max-width: 48ch;
+    margin: 0 0 1rem;
+}
+
+img {
+    width: 100%;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    background-color: $clr2;
+    text-decoration: none;
+    font-weight: 600;
+    color: $clr1;
+    text-align: center;
+    &:hover {
+        filter: brightness(80%);
+    }
+}
+
+a:hover {
+    filter: brightness(80%);
+}
