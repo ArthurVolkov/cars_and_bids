@@ -1,11 +1,10 @@
 <template>
   <li>
-    <h3>{{ car.name }}</h3>
-    <p>Price: {{ car.price }}</p>
-    <p>Type: {{ car.type }}</p>
-    <p>In stock: {{ inStock }}</p>
-    <p>Created at: {{ createdAt }}</p>
-    <div class="preview-btn-container flex justify-between align-center">
+    <h3>{{ car.year }} {{ car.vendor }} {{car.model }} </h3>
+    <p>Mileage: {{ car.mileage }}</p>
+    <p>Bid: {{ lastBid }}</p>
+    <p>Time Left: {{ timeLeft }}</p>
+    <!-- <div class="preview-btn-container flex justify-between align-center">
       <router-link class="preview-btn" :to="'/car/details/' + car._id"
         >Details</router-link
       >
@@ -13,51 +12,68 @@
         >Edit</router-link
       >
       <button class="preview-remove-btn" @click="removeCar(car)">X</button>
-    </div>
+    </div> -->
   </li>
 </template>
 
-
-
 <script>
-import carPreview from "@/cmps/car-preview.vue";
+//import carPreview from "@/cmps/car-preview.vue";
 
 export default {
   name: "car-preview",
-  computed: {
-    createdAt() {
-      const now = new Date(Date.now());
-      const createdDate = new Date(this.car.createdAt);
-      if (
-        now.getDate() === createdDate.getDate() &&
-        now - createdDate < 1000 * 60 * 60 * 24
-      )
-        return createdDate.toTimeString().substr(0, 5);
-      else if (now.getFullYear() === createdDate.getFullYear())
-        return createdDate.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        });
-      else return createdDate.toISOString().substr(0, 10);
+  props: {
+    car: {
+      type: Object,
     },
-    inStock() {
-      return this.car.inStock ? '✔' : '❌'
+  },
+  data () {
+    return {
+      now: Date.now(),
+      timeLeftInterval: null
     }
+  },
+  computed: {
+    lastBid() {
+      if (this.car.auction.bids.length) {
+        return this.car.auction.bids[0].bidPrice
+      } else {
+        return this.car.auction.startPrice
+      } 
+    },
+    timeLeft() {
+      return this.car.auction.createdAt + this.car.auction.duration - this.now
+    }
+    // createdAt() {
+    //   const now = new Date(Date.now());
+    //   const createdDate = new Date(this.car.createdAt);
+    //   if (
+    //     now.getDate() === createdDate.getDate() &&
+    //     now - createdDate < 1000 * 60 * 60 * 24
+    //   )
+    //     return createdDate.toTimeString().substr(0, 5);
+    //   else if (now.getFullYear() === createdDate.getFullYear())
+    //     return createdDate.toLocaleDateString("en-US", {
+    //       month: "short",
+    //       day: "numeric",
+    //     });
+    //   else return createdDate.toISOString().substr(0, 10);
+    // },
+    // inStock() {
+    //   return this.car.inStock ? '✔' : '❌'
+    // }
   },
   methods: {
     removeCar(car) {
       this.$emit("remove", car);
     },
   },
-  props: {
-    car: {
-      type: Object,
-    },
-  },
-  components: {
-    carPreview,
-  },
   created() {
+    this.timeLeftInterval = setInterval(() => {
+      this.now = Date.now()
+    }, 1000);
+  },
+  destroyed() {
+    clearInterval(this.timeLeftInterval);
   }
 };
 </script>

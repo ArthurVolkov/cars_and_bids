@@ -5,6 +5,56 @@ import { httpService } from './http.service.js'
 import { userService } from './user.service.js'
 import axios from 'axios'
 
+const vendors = ['Audi','BMW','Golf','Mazda','Ferari']
+const bodyStyles = ['Coupe','Sedan','Truck','Hatchback'];
+const transmissions = ['Auto','Menual','Robotic'];
+const drivetrains = ['Rear-wheel drive','Front-wheel drive'];
+const colors = ['Blue','Black','Red','Yellow','Green','Gray'];
+
+const usersDemo = 
+[
+    {
+        "_id": "u101",
+        "fullname": "Shuki ben Shuki",
+        "imgUrl": "/img/img1.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u102",
+        "fullname": "Puki ben Puki",
+        "imgUrl": "/img/img2.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u103",
+        "fullname": "Muki ben Muki",
+        "imgUrl": "/img/img3.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u104",
+        "fullname": "Cooki ben Cooki",
+        "imgUrl": "/img/img4.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u105",
+        "fullname": "Ruti be Ruti",
+        "imgUrl": "/img/img5.jpg",
+        "isAdmin": true,
+        "username": "a",
+        "password": "a"
+    }
+]
+
 const CAR_KEY = 'cars'
 const CAR_URL = '//localhost:3030/api/car/'
 
@@ -37,9 +87,10 @@ async function query(filterBy) {
     // var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
     // const cars = await httpService.get(`car${queryStr}`)
     // return cars
-    const cars =  await storageService.query('cars');
-    console.log('cars:', cars);
-    return cars
+    const data =  await storageService.query('cars');
+    const cars = data[0];
+    const count = data[1];
+    return data
 }
 
 async function getById(carId) {
@@ -104,9 +155,9 @@ function _createCars() {
         users = usersDemo;
         localStorage.setItem('users', JSON.stringify(users))
     }
-    var cars = JSON.parse(localStorage.getItem(CAR_KEY)) || []
+    const cars = JSON.parse(localStorage.getItem(CAR_KEY)) || []
     if (!cars || !cars.length) {
-        for (i=0;i<100;i++){
+        for (let i=0;i<100;i++){
             cars.push(_createCar());
         }
         localStorage.setItem(CAR_KEY, JSON.stringify(cars))
@@ -114,57 +165,8 @@ function _createCars() {
     return cars;
 }
 
-const vendors = ['Audi','BMW','Golf','Mazda','Ferari']
-const bodyStyles = ['Coupe','Sedan','Truck','Hatchback'];
-const transmissions = ['Auto','Menual','Robotic'];
-const drivetrains = ['Rear-wheel drive','Front-wheel drive'];
-const colors = ['Blue','Black','Red','Yellow','Green','Gray'];
-
-const usersDemo = 
-[
-    {
-        "_id": "u101",
-        "fullname": "Shuki ben Shuki",
-        "imgUrl": "/img/img1.jpg",
-        "isAdmin": false,
-        "username": "a",
-        "password": "a"
-    },
-    {
-        "_id": "u102",
-        "fullname": "Puki ben Puki",
-        "imgUrl": "/img/img2.jpg",
-        "isAdmin": false,
-        "username": "a",
-        "password": "a"
-    },
-    {
-        "_id": "u103",
-        "fullname": "Muki ben Muki",
-        "imgUrl": "/img/img3.jpg",
-        "isAdmin": false,
-        "username": "a",
-        "password": "a"
-    },
-    {
-        "_id": "u104",
-        "fullname": "Cooki ben Cooki",
-        "imgUrl": "/img/img4.jpg",
-        "isAdmin": false,
-        "username": "a",
-        "password": "a"
-    },
-    {
-        "_id": "u105",
-        "fullname": "Ruti be Ruti",
-        "imgUrl": "/img/img5.jpg",
-        "isAdmin": true,
-        "username": "a",
-        "password": "a"
-    }
-]
-
 function _createCar(){
+    const startPrice = makeRandomInt(20000,40000) 
     const car = {
         id: makeId(),
         vendor: makeRandom(vendors),
@@ -189,49 +191,49 @@ function _createCar(){
         comments: [
             {
                 id: makeId(4),
-                "txt": "if i had the cash Id still be bidding",
-                "rate": makeRandomInt(1,5),
-                "by": makeRandomUser(usersDemo)
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
             },
             {
                 id: makeId(4),
-                "txt": "if i had the cash Id still be bidding",
-                "rate": makeRandomInt(1,5),
-                "by": makeRandomUser(usersDemo)
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
             },
             {
                 id: makeId(4),
-                "txt": "if i had the cash Id still be bidding",
-                "rate": makeRandomInt(1,5),
-                "by": makeRandomUser(usersDemo)
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
             }
         ],
         auction: 
         {
+            startPrice: startPrice,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: 1000*60*60*24*7,
             bids: [
                 {
                     id: makeId(4),
                     by: makeRandomUser(usersDemo), 
-                    bidPrice: 80000,
+                    bidPrice: startPrice + makeRandomInt(30001,40000),
                     createdAt: Date.now() + 1000*60*60*24
                 },
                 {
                     id: makeId(4),
                     by: makeRandomUser(usersDemo), 
-                    bidPrice: 90000,
+                    bidPrice: startPrice + makeRandomInt(20001,30000),
                     createdAt: Date.now() + 1000*60*60*24*2
                 },
                 {
                     id: makeId(4),
                     by: makeRandomUser(usersDemo), 
-                    bidPrice: 1000000,
+                    bidPrice: startPrice + makeRandomInt(10001,20000),
                     createdAt: Date.now() + 1000*60*60*24*3
                 },
             ],
-            startPrice: 45000,
-            status: 'active',
-            createdAt: Date.now(),
-            duration: Date.now() + 1000*60*60*24*7
         }
     }
     return car
@@ -247,6 +249,7 @@ function makeId(length = 5) {
 }
 
 function makeRandom(array){
+    console.log(array)
     return array[Math.floor(Math.random() * array.length)];
 }
 
@@ -255,11 +258,12 @@ function makeRandomInt(min,max){
 }
 
 function makeRandomUser(users) {
+    console.log(users)
     const idx = makeRandomInt(0,users.length-1);
-    minimalUser = {
+    var minimalUser = {
         _id: users[idx]._id,
-        fullname = users[idx].fullname,
-        imgUrl = users[idx].imgUrl
+        fullname: users[idx].fullname,
+        imgUrl: users[idx].imgUrl
     }
     return minimalUser
 }

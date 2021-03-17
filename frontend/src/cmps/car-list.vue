@@ -5,7 +5,7 @@
         layout="prev, pager, next"
         background
         :total="carsCount"
-        :page-size="6"
+        :page-size="10"
         @current-change="setPage"
       ></el-pagination>
     </div>
@@ -21,7 +21,6 @@
         :car="car"
         :key="car._id"
         class="car-item-container flex flex-col justify-between align-center"
-        @remove="remove"
       ></car-preview>
     </ul>
     <!-- <div v-else class="car-loading flex justify-center align-center">
@@ -30,24 +29,25 @@
   </section>
 </template>
 
-
-
 <script>
 import carPreview from "@/cmps/car-preview.vue";
-
 import { Loading } from 'element-ui';
 
-
 export default {
+  props: {
+    cars: {
+      type: Array,
+    },
+  },
   name: "car-list",
   data() {
     return {
     }
   },
   methods: {
-    remove(car) {
-      this.$emit('remove', car);
-    },
+    // remove(car) {
+    //   this.$emit('remove', car);
+    // },
     setPage(val) {
       console.log('val:', val)
       this.$emit('setPage', val);
@@ -61,11 +61,6 @@ export default {
     carsCount() {
       return this.$store.getters.carsCount
     }
-  },
-  props: {
-    cars: {
-      type: Array,
-    },
   },
   components: {
     carPreview,

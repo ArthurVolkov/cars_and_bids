@@ -13,7 +13,6 @@ export const carStore = {
             pageSize: 6,
             sortBy: 'name'
         },
-        // sortBy: 'name',
         isLoading: false,
     },
     getters: {
@@ -21,7 +20,7 @@ export const carStore = {
             return state.carsCount
         },
         carsToShow(state) {
-            console.log('state.cars:', state.cars)
+            // console.log('state.cars:', state.cars)
             return state.cars
             // return state.cars.sort((carA, carB) => {
             //     // console.log('state.sortby:', state.sortby)
@@ -83,8 +82,10 @@ export const carStore = {
         async loadCars(context) {
             context.commit({ type: 'setLoading', isLoading: true })
             try {
-                const { cars, count } = await carService.query(context.state.filterBy)
-                // console.log('cars', cars)
+                const data = await carService.query(context.state.filterBy)
+                const cars = data[0];
+                const count = data[1];
+                console.log('cars', cars)
                 context.commit({ type: 'setCars', cars });
                 context.commit({ type: 'setCount', count });
             } catch (err) {
