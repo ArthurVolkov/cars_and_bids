@@ -1,31 +1,14 @@
 <template>
   <section class="car-filter flex justify-between">
     <div class="flex flex-col justify-center align-center">
-      <label for="search"> Search a car: </label>
-      <el-input
-        id="search"
-        ref="filterInput"
-        type="text"
-        @input="filterDebounce"
-        placeholder="Search..."
-        v-model="filterBy.name"
-        size="small"
-        clearable
-      >
-      </el-input>
-    </div>
-
-    <div class="flex flex-col justify-center align-center">
-      <label for="typeFilter">Tipe:</label>
       <el-select
-        id="typeFilter"
-        v-model="filterBy.type"
+        v-model="filterBy.fromYear"
         @change="setFilter"
-        placeholder="Tipe:"
+        placeholder="From Year"
         size="small"
       >
         <el-option
-          v-for="item in tipes"
+          v-for="item in years"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -35,16 +18,50 @@
     </div>
 
     <div class="flex flex-col justify-center align-center">
-      <label for="stockFilter">In stock:</label>
       <el-select
-        id="stockFilter"
-        v-model="filterBy.inStock"
+        v-model="filterBy.toYear"
+        @change="setFilter"
+        placeholder="To year"
+        size="small"
+      >
+        <el-option
+          v-for="item in years"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <!-- <label for="typeFilter">Tipe:</label> -->
+      <el-select
+        v-model="filterBy.bodyStyle"
+        @change="setFilter"
+        placeholder="Body style"
+        size="small"
+      >
+        <el-option
+          v-for="item in bodyStyles"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <!-- <label for="stockFilter">In stock:</label> -->
+      <el-select
+        v-model="filterBy.bodyStyle"
         @change="setFilter"
         placeholder="In stock:"
         size="small"
       >
         <el-option
-          v-for="item in stock"
+          v-for="item in bodyStyles"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -54,16 +71,15 @@
     </div>
 
     <div class="flex flex-col justify-center align-center">
-      <label for="sort">Sort:</label>
+      <!-- <label for="sort">Sort:</label> -->
       <el-select
-        id="sort"
-        v-model="sortBy"
-        @change="setSort"
-        placeholder="Sort:"
+        v-model="filterBy.manufacturer"
+        @change="setFilter"
+        placeholder="Manufacturers"
         size="small"
       >
         <el-option
-          v-for="item in sort"
+          v-for="item in manufacturers"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -71,13 +87,6 @@
         </el-option>
       </el-select>
     </div>
-    <!-- <div class="flex flex-col justify-center align-center">
-      <label for="sort">Sort:</label>
-      <select id="sort" @change="setSort" v-model="sortBy">
-        <option value="name">Name</option>
-        <option value="price">Price</option>
-      </select>
-    </div> -->
   </section>
 </template>
 
@@ -95,41 +104,29 @@ export default {
   data() {
     return {
       filterBy: {
-        name: '',
-        inStock: 'all',
-        type: 'all',
+        fromYear: '',
+        toYear: '',
+        bodyStyle: '',
+        manufacturer: '',
       },
-      sortBy: 'name',
-      tipes: [{
-        value: 'all',
-        label: 'All'
-      }, {
-        value: 'Funny',
-        label: 'Funny'
-      }, {
-        value: 'Adult',
-        label: 'Adult'
-      }, {
-        value: 'Educational',
-        label: 'Educational'
-      }],
-      stock: [{
-        value: 'all',
-        label: 'All'
-      }, {
-        value: 'true',
-        label: 'in stock'
-      }, {
-        value: 'false',
-        label: 'not in stock'
-      }],
-      sort: [{
-        value: 'name',
-        label: 'Name'
-      }, {
-        value: 'price',
-        label: 'Price'
-      }],
+      sortBy: '',
+      years: [],
+      bodyStyles: [],
+      manufacturers: []
+      // bodyStyles: [{
+      //   value: 'all',
+      //   label: 'All'
+      // }, {
+      //   value: 'Funny',
+      //   label: 'Funny'
+      // }, {
+      //   value: 'Adult',
+      //   label: 'Adult'
+      // }, {
+      //   value: 'Educational',
+      //   label: 'Educational'
+      // }],
+
     }
   },
   methods: {
@@ -142,6 +139,10 @@ export default {
   },
   created() {
     this.filterDebounce = debounce(this.setFilter, 1000);
+
+    for (let i = 2021; i >= 1970; i--) {
+      this.years.push({value: i, label: i});
+    }
   },
 }
 </script>

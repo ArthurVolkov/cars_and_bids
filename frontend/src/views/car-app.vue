@@ -1,11 +1,6 @@
 <template>
   <section class="car-app flex flex-col">
-    <div class="filter-container">
-      <div class="filter-btns main-container flex justify-between align-center">
-        <car-filter @setFilter="setFilter" @setSort="setSort"></car-filter>
-        <router-link class="open-edit" to="/car/edit">Add new car</router-link>
-      </div>
-    </div>
+    <car-filter @setFilter="setFilter" @setSort="setSort"></car-filter>
 
     <car-list
       :cars="carsToShow"

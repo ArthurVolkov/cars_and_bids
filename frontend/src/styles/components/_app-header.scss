@@ -1,5 +1,23 @@
 
 .header {
-    height: 60px;
+    height: 80px;
     background-color: $clr5;
+
+    .logo {
+        font-size: 2rem;
+        font-family: cursive;
+        font-weight: 900;
+        span {
+            color: $clr6;
+        }
+    }
+
+    .el-input {
+        width: 300px;
+    }
+    // img {
+    //     height: auto;
+    //     width: auto;
+    //     background-color: transparent;
+    // }
 }

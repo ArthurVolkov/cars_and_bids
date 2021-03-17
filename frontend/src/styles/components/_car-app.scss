@@ -1,42 +1,45 @@
 
 .car-app {
-    .filter-container {
+    .car-filter {
         background-color: $clr3;
         display: flex;
         padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 0 0 10px 10px;
+        margin: 10px 0;
+        border-radius: 10px;
 
-        .filter-btns {
-            display: flex;
+        >* {
+            margin: 0 5px;
         }
+        // .filter-btns {
+        //     display: flex;
+        // }
 
-        .open-edit {
-            white-space: nowrap;
-            align-self: flex-end;
-            text-decoration: none;
-            padding: 2.5px;
-            border-radius: 5px;
-            background-color: $clr5;
-            color: $clr1;
-            font-weight: 700;
-            text-align: center;
-            margin-left: 10px;
-        }
+        // .open-edit {
+        //     white-space: nowrap;
+        //     align-self: flex-end;
+        //     text-decoration: none;
+        //     padding: 2.5px;
+        //     border-radius: 5px;
+        //     background-color: $clr5;
+        //     color: $clr1;
+        //     font-weight: 700;
+        //     text-align: center;
+        //     margin-left: 10px;
+        // }
     }
 }
 
-.back-btn {
-    cursor: pointer;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: $clr2;
-    text-decoration: none;
-    color: $clr1;
-    width: 30%;
-    font-weight: 600;
-    text-align: center;
-}
+// .back-btn {
+//     cursor: pointer;
+//     border-radius: 5px;
+//     padding: 5px;
+//     background-color: $clr2;
+//     text-decoration: none;
+//     color: $clr1;
+//     width: 30%;
+//     font-weight: 600;
+//     text-align: center;
+// }
 
 .alert {
     color:white;
