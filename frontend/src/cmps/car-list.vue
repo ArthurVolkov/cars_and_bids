@@ -1,13 +1,13 @@
 <template>
   <section class="list-container main-container">
     <div class="block">
-      <el-pagination
+      <!-- <el-pagination
         layout="prev, pager, next"
         background
         :total="carsCount"
         :page-size="10"
         @current-change="setPage"
-      ></el-pagination>
+      ></el-pagination> -->
     </div>
     <!-- <ul v-if="!loading" class="car-list card-grid flex"> -->
     <ul
