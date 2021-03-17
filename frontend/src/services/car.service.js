@@ -160,6 +160,9 @@ function _createCars() {
         for (let i=0;i<100;i++){
             cars.push(_createCar());
         }
+        cars.unshift(_createDemoCar1());
+        cars.unshift(_createDemoCar2());
+        cars.unshift(_createDemoCar3());
         localStorage.setItem(CAR_KEY, JSON.stringify(cars))
     }
     return cars;
@@ -249,7 +252,7 @@ function makeId(length = 5) {
 }
 
 function makeRandom(array){
-    console.log(array)
+    //console.log(array)
     return array[Math.floor(Math.random() * array.length)];
 }
 
@@ -258,7 +261,7 @@ function makeRandomInt(min,max){
 }
 
 function makeRandomUser(users) {
-    console.log(users)
+    //console.log(users)
     const idx = makeRandomInt(0,users.length-1);
     var minimalUser = {
         _id: users[idx]._id,
@@ -266,5 +269,254 @@ function makeRandomUser(users) {
         imgUrl: users[idx].imgUrl
     }
     return minimalUser
+}
+
+function _createDemoCar1(){
+    const startPrice = makeRandomInt(20000,40000)
+    const _id = '11111'
+    const car = {
+        _id: _id,
+        vendor: 'BMW',
+        model: '550i',
+        bodyStyle: 'Sedan',
+        year: 2014,
+        transmission: 'Auto',
+        drivetrain: '4WD/AWD',
+        mileage: 91100,
+        engine: '4.4L Turbocharged V8',
+        exteriorColor: 'Carbon Black Metallic',
+        interiorColor: 'Black',
+        desc: 'very nice carTHIS... is a 2014 BMW 550i xDrive, finished in Carbon Black with a black leather interior.',
+        equipments: [
+            'M Sport Package (19-inch wheels, M Sport body kit, LED fog lights, Shadowline exterior trim, aluminum-look interior trim, M steering wheel, and anthracite headliner)',
+            'Executive Package (Comfort Access keyless entry, soft-close doors, power-operated trunk lid, head-up display, and Harman-Kardon surround-sound system)equip2',
+            'Cold Weather Package (heated front and rear seats, heated steering wheel, and retractable headlight washers)',
+            'Adaptive headlights'],
+        owner: makeRandomUser(usersDemo),
+        imgUrls: [
+            '@/assents/images/' + _id + '/1.jpg',
+            '@/assents/images/' + _id + '/2.jpeg',
+            '@/assents/images/' + _id + '/3.jpeg',
+            '@/assents/images/' + _id + '/4.jpeg'],
+        location: {
+            address: 'Chicago, IL 60634',
+            lat: 41.950401,
+            lng: -87.793808
+        },
+        comments: [
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            }
+        ],
+        auction: 
+        {
+            startPrice: startPrice,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: 1000*60*60*24*7,
+            bids: [
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(30001,40000),
+                    createdAt: Date.now() + 1000*60*60*24
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(20001,30000),
+                    createdAt: Date.now() + 1000*60*60*24*2
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(10001,20000),
+                    createdAt: Date.now() + 1000*60*60*24*3
+                },
+            ],
+        }
+    }
+    return car
+}
+
+function _createDemoCar2(){
+    const startPrice = makeRandomInt(20000,40000)
+    const _id = '22222'
+    const car = {
+        _id: _id,
+        vendor: 'Audi',
+        model: 'S6',
+        bodyStyle: 'Sedan',
+        year: 2008,
+        transmission: 'Auto',
+        drivetrain: '4WD/AWD',
+        mileage: 135700,
+        engine: '5.2L V10',
+        exteriorColor: 'Quartz Gray Metallic',
+        interiorColor: 'Black',
+        desc: 'THIS... is a 2008 Audi S6, finished in Quartz Gray Metallic with a black leather interior.',
+        equipments: [
+            '19-inch alloy wheels',
+            '6-speed Tiptronic automatic transmission with shift paddles',
+            'Electronic Differential Lock (EDL)',
+            'Sport-tuned suspension'],
+        owner: makeRandomUser(usersDemo),
+        imgUrls: [
+            '@/assents/images/' + _id + '/1.jpg',
+            '@/assents/images/' + _id + '/2.jpg',
+            '@/assents/images/' + _id + '/3.jpg',
+            '@/assents/images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Martinez, CA 94553',
+            lat: 37.992489,
+            lng: -122.114357
+        },
+        comments: [
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            }
+        ],
+        auction: 
+        {
+            startPrice: startPrice,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: 1000*60*60*24*7,
+            bids: [
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(30001,40000),
+                    createdAt: Date.now() + 1000*60*60*24
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(20001,30000),
+                    createdAt: Date.now() + 1000*60*60*24*2
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(10001,20000),
+                    createdAt: Date.now() + 1000*60*60*24*3
+                },
+            ],
+        }
+    }
+    return car
+}
+
+function _createDemoCar3(){
+    const startPrice = makeRandomInt(20000,40000)
+    const _id = '33333'
+    const car = {
+        _id: _id,
+        vendor: 'Porsche',
+        model: 'Boxster',
+        bodyStyle: 'Convertible',
+        year: 1998,
+        transmission: 'Manual',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 132300,
+        engine: '2.5L Flat-6',
+        exteriorColor: 'Guards Red',
+        interiorColor: 'Savannah Beige',
+        desc: 'THIS... is a 1998 Porsche Boxster, finished in Guards Red with a beige cloth soft top and a Savannah Beige leather interior.',
+        equipments: [
+            '17-inch wheels',
+            '5-speed manual transmission',
+            'Cloth soft top',
+            'Leather upholstery'],
+        owner: makeRandomUser(usersDemo),
+        imgUrls: [
+            '@/assents/images/' + _id + '/1.jpg',
+            '@/assents/images/' + _id + '/2.jpg',
+            '@/assents/images/' + _id + '/3.jpg',
+            '@/assents/images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Austin, TX 78750',
+            lat: 30.430460,
+            lng: -97.804008
+        },
+        comments: [
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            }
+        ],
+        auction: 
+        {
+            startPrice: startPrice,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: 1000*60*60*24*7,
+            bids: [
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(30001,40000),
+                    createdAt: Date.now() + 1000*60*60*24
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(20001,30000),
+                    createdAt: Date.now() + 1000*60*60*24*2
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(10001,20000),
+                    createdAt: Date.now() + 1000*60*60*24*3
+                },
+            ],
+        }
+    }
+    return car
 }
 

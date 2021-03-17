@@ -29,7 +29,7 @@ export const carStore = {
             // })
         },
         reviewsToShow(state) {
-            console.log('state.cars:', state.reviews)
+            //console.log('state.cars:', state.reviews)
             return state.reviews
             // return state.cars.sort((carA, carB) => {
             //     // console.log('state.sortby:', state.sortby)
