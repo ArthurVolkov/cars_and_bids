@@ -163,6 +163,9 @@ function _createCars() {
         cars.unshift(_createDemoCar1());
         cars.unshift(_createDemoCar2());
         cars.unshift(_createDemoCar3());
+        cars.unshift(_createDemoCar4());
+        cars.unshift(_createDemoCar5());
+        cars.unshift(_createDemoCar6());
         localStorage.setItem(CAR_KEY, JSON.stringify(cars))
     }
     return cars;
@@ -520,3 +523,251 @@ function _createDemoCar3(){
     return car
 }
 
+function _createDemoCar4(){
+    const startPrice = makeRandomInt(20000,40000)
+    const _id = '44444'
+    const car = {
+        _id: _id,
+        vendor: 'BMW',
+        model: 'M5',
+        bodyStyle: 'Sedan',
+        year: 2018,
+        transmission: 'Auto',
+        drivetrain: '4WD/AWD',
+        mileage: 14000,
+        engine: '4.4L Turbocharged V8',
+        exteriorColor: 'Marina Bay Blue',
+        interiorColor: 'Silverstone',
+        desc: 'THIS... is a 2018 BMW M5, finished in Marina Bay Blue with a Silverstone full leather interior.',
+        equipments: [
+            'Driving Assistance Plus (Active Driving Assistant Plus)',
+            '20-inch M light-alloy wheels',
+            '8-speed M Steptronic automatic transmission',
+            'M carbon ceramic brakes'],
+        owner: makeRandomUser(usersDemo),
+        imgUrls: [
+            '@/assents/images/' + _id + '/1.jpg',
+            '@/assents/images/' + _id + '/2.jpg',
+            '@/assents/images/' + _id + '/3.jpg',
+            '@/assents/images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Humble, TX 77346',
+            lat: 29.988130,
+            lng: -95.175490
+        },
+        comments: [
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            }
+        ],
+        auction: 
+        {
+            startPrice: startPrice,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: 1000*60*60*24*7,
+            bids: [
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(30001,40000),
+                    createdAt: Date.now() + 1000*60*60*24
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(20001,30000),
+                    createdAt: Date.now() + 1000*60*60*24*2
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(10001,20000),
+                    createdAt: Date.now() + 1000*60*60*24*3
+                },
+            ],
+        }
+    }
+    return car
+}
+
+function _createDemoCar5(){
+    const startPrice = makeRandomInt(20000,40000)
+    const _id = '55555'
+    const car = {
+        _id: _id,
+        vendor: 'Audi',
+        model: 'S5',
+        bodyStyle: 'Coupe',
+        year: 2013,
+        transmission: 'Auto',
+        drivetrain: '4WD/AWD',
+        mileage: 87400,
+        engine: '3.0L Supercharged V6',
+        exteriorColor: 'Ibis White',
+        interiorColor: 'Black/Magma Red',
+        desc: 'THIS... is a 2013 Audi S5 coupe, finished in Ibis White with a black and Magma Red leather interior.',
+        equipments: [
+            '7-speed S tronic dual-clutch automatic transmission',
+            'Quattro all-wheel-drive system with sports differential',
+            'Xenon headlights',
+            'Panoramic glass sunroof'],
+        owner: makeRandomUser(usersDemo),
+        imgUrls: [
+            '@/assents/images/' + _id + '/1.jpg',
+            '@/assents/images/' + _id + '/2.jpg',
+            '@/assents/images/' + _id + '/3.jpg',
+            '@/assents/images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Clayton, NC 27527',
+            lat: 35.648659,
+            lng: -78.385597
+        },
+        comments: [
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            }
+        ],
+        auction: 
+        {
+            startPrice: startPrice,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: 1000*60*60*24*7,
+            bids: [
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(30001,40000),
+                    createdAt: Date.now() + 1000*60*60*24
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(20001,30000),
+                    createdAt: Date.now() + 1000*60*60*24*2
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(10001,20000),
+                    createdAt: Date.now() + 1000*60*60*24*3
+                },
+            ],
+        }
+    }
+    return car
+}
+
+function _createDemoCar6(){
+    const startPrice = makeRandomInt(20000,40000)
+    const _id = '66666'
+    const car = {
+        _id: _id,
+        vendor: 'Mercedes-Benz',
+        model: 'G550',
+        bodyStyle: 'SUV',
+        year: 2017,
+        transmission: 'Auto',
+        drivetrain: '4WD/AWD',
+        mileage: 5500,
+        engine: '4.0L Turbocharged V8',
+        exteriorColor: 'Obsidian Black Metallic',
+        interiorColor: 'Black',
+        desc: 'THIS... is a 2017 Mercedes-Benz G550 4×4², finished in Obsidian Black with a black interior.',
+        equipments: [
+            '22-inch wheels',
+            'Adjustable suspension system',
+            'Portal axles',
+            'AMG carbon fiber exterior trim'],
+        owner: makeRandomUser(usersDemo),
+        imgUrls: [
+            '@/assents/images/' + _id + '/1.jpg',
+            '@/assents/images/' + _id + '/2.jfif',
+            '@/assents/images/' + _id + '/3.jfif',
+            '@/assents/images/' + _id + '/4.jfif'],
+        location: {
+            address: 'Fort Worth, TX 76108',
+            lat: 35.648659,
+            lng: -78.385597
+        },
+        comments: [
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
+                rate: makeRandomInt(1,5),
+                by: makeRandomUser(usersDemo)
+            }
+        ],
+        auction: 
+        {
+            startPrice: startPrice,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: 1000*60*60*24*7,
+            bids: [
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(30001,40000),
+                    createdAt: Date.now() + 1000*60*60*24
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(20001,30000),
+                    createdAt: Date.now() + 1000*60*60*24*2
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: startPrice + makeRandomInt(10001,20000),
+                    createdAt: Date.now() + 1000*60*60*24*3
+                },
+            ],
+        }
+    }
+    return car
+}
