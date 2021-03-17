@@ -1,16 +1,14 @@
 <template>
   <div v-if="car" class="car-details flex flex-col justify-center align-center">
-    <h2>Name: {{ car.name }}</h2>
-    <h3>Price: {{ car.price }}</h3>
-    <h3>Type: {{ car.type }}</h3>
-    <h3>In stock: {{ car.inStock }}</h3>
-
-    <div>Created at: {{ createdAt }}</div>
+    <h2>{{ car.year }} {{ car.vendor }} {{car.model }}</h2>
+    <h3>Mileage: {{ car.mileage }}</h3>
+    <h3>Bid: {{ lastBid }}</h3>
+    <h3>Time Left: {{ timeLeft }}</h3>
 
     <ul class="review-container clean-list">
-      <li v-for="review in reviews" :key="review._id">
-        <span>Review from: {{ review.user.fullname }} ➡ </span>
-        <pre>   {{ review.content }}</pre>
+      <li v-for="comment in comments" :key="comment._id">
+        <span>Comment from: {{ car.auction.comments.by.fullname }} ➡ </span>
+        <pre>   {{ car.auction.comments.txt }}</pre>
       </li>
     </ul>
 
@@ -68,20 +66,15 @@ export default {
     };
   },
   computed: {
-    createdAt() {
-      const now = new Date();
-      const createdDate = new Date(this.car.createdAt);
-      if (
-        now.getDate() === createdDate.getDate() &&
-        now - createdDate < 1000 * 60 * 60 * 24
-      )
-        return createdDate.toTimeString().substr(0, 5);
-      else if (now.getFullYear() === createdDate.getFullYear())
-        return createdDate.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        });
-      else return createdDate.toISOString().substr(0, 10);
+    lastBid() {
+      if (this.car.auction.bids.length) {
+        return this.car.auction.bids[0].bidPrice
+      } else {
+        return this.car.auction.startPrice
+      } 
+    },
+    timeLeft() {
+      return this.car.auction.createdAt + this.car.auction.duration - this.now
     },
     // reviews() {
     //   console.log('this.$store.getters.reviewsToShow:', this.$store.getters.reviewsToShow)
