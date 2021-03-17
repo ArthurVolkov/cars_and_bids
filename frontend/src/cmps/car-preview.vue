@@ -1,9 +1,16 @@
 <template>
-  <li>
-    <h3>{{ car.year }} {{ car.vendor }} {{car.model }} </h3>
+  <li class="car-preview flex flex-col">
+    <div class="img-container">
+      <!-- <img src="../assets/images/22222/1.jpg" alt="" /> -->
+      <!-- <img src="/assets/images/22222/1.jpg" alt=""> -->
+      <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+    </div>
+
+    <h3>{{ car.year }} {{ car.vendor }} {{ car.model }}</h3>
     <p>Mileage: {{ car.mileage }}</p>
     <p>Bid: {{ lastBid }}</p>
-    <p>Time Left: {{ timeLeft }}</p>
+    <!-- <p>Time Left: {{ timeLeft }}</p> -->
+    <p>Time Left: {{ timeLeft | duration('humanize') }}</p>
     <!-- <div class="preview-btn-container flex justify-between align-center">
       <router-link class="preview-btn" :to="'/car/details/' + car._id"
         >Details</router-link
@@ -26,7 +33,7 @@ export default {
       type: Object,
     },
   },
-  data () {
+  data() {
     return {
       now: Date.now(),
       timeLeftInterval: null
@@ -38,7 +45,7 @@ export default {
         return this.car.auction.bids[0].bidPrice
       } else {
         return this.car.auction.startPrice
-      } 
+      }
     },
     timeLeft() {
       return this.car.auction.createdAt + this.car.auction.duration - this.now
@@ -66,11 +73,15 @@ export default {
     removeCar(car) {
       this.$emit("remove", car);
     },
+    getImgUrl(pic) {
+      return require('../assets/' + pic)
+    }
   },
   created() {
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
     }, 1000);
+    console.log('car in preview', this.car);
   },
   destroyed() {
     clearInterval(this.timeLeftInterval);

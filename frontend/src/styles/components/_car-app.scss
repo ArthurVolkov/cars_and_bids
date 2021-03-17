@@ -27,6 +27,20 @@
         //     margin-left: 10px;
         // }
     }
+
+    .car-preview {
+        // border: 1px solid $clr3;
+        align-items: flex-start;
+
+        .img-container {
+            height: 50%;
+            
+            img {
+                border-radius: 10px;
+                
+            }
+        }
+    }
 }
 
 // .back-btn {
