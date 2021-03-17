@@ -8,9 +8,8 @@ import axios from 'axios'
 const CAR_KEY = 'cars'
 const CAR_URL = '//localhost:3030/api/car/'
 
-
-// _createCars()
-// var gFilterBy = { name: '', pageIdx: 0 }
+_createCars()
+var gFilterBy = { name: '', pageIdx: 0 }
 
 export const carService = {
     query,
@@ -24,7 +23,6 @@ export const carService = {
     // getCarsCountByUserId
 }
 
-
 function setFilter(filterBy) {
     gFilterBy.title = filterBy.title
     gFilterBy.pageIdx = 0;
@@ -34,97 +32,235 @@ function nextPage() {
 }
 
 async function query(filterBy) {
-console.log('filterBy:', filterBy)
+    // console.log('filterBy:', filterBy)
 
-    var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
-    const cars = await httpService.get(`car${queryStr}`)
-    console.log('cars:', cars)
+    // var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
+    // const cars = await httpService.get(`car${queryStr}`)
+    // return cars
+    const cars =  await storageService.query('cars');
+    console.log('cars:', cars);
     return cars
 }
-// function query(filterBy) {
-//     console.log('filterBy in front-service:', filterBy)
-//     // return storageService.query(CAR_KEY)
-//     return axios.get(CAR_URL, { params: filterBy })
-//         .then(res => res.data)
-//     // return axios.get(CAR_URL, { params: gFilterBy })
-//     //     .then(res => res.data)
-// }
 
-// function getById(id) {
-//     // return storageService.get(CAR_KEY, id)
-//     return axios.get(CAR_URL + id).then(res => res.data)
-// }
-
-async function getById(id) {
-    const car = await httpService.get(`car/${id}`)
-    console.log('car:', car)
-    return car
+async function getById(carId) {
+    // const car = await httpService.get(`car/${id}`)
+    // console.log('car:', car)
+    // return car
+    return await storageService.get('cars',carId)
 }
 
-
-async function remove(id) {
-    return httpService.delete(`car/${id}`)
-
+async function remove(carId) {
+    //return httpService.delete(`car/${id}`)
+    return await storageService.delete('cars', carId)
 }
-// function remove(id) {
-//     // return storageService.remove(CAR_KEY, id)
-//     // return axios.get(CAR_URL + id + '/remove').then(res => res.data)
-
-//     return axios.delete(CAR_URL + id).then(res => res.data)
-// }
 
 async function save(car) {
     if (car._id) {
-        // return storageService.put(CAR_KEY, car)
-
-        const editedCar = await httpService.put(`car/${car._id}`, car)
+        const editedCar = await storageService.put('cars', car)
         return editedCar
-
-        // return axios.put(CAR_URL + car._id, car)
-        //     .then(res => res.data)
-        //     .catch(err => { throw new Error(err.message) })
     } else {
-        const addedCar = await httpService.post('car', car)
+        const addedCar = await storageService.post('cars', car)
         return addedCar
-        // return storageService.post(CAR_KEY, {...car, createdAt: Date.now()})
-        // return axios.post(CAR_URL, car).then(res => res.data)
     }
 }
 
-// async function saveReview(review) {
-//     // const user = userService.getLoggedinUser()
-//     // if (!user) throw new Error('Have to login')
-//     // review.owner = user.fullname
-//     const addedReview = await httpService.post(`review/`, review)
-//     return addedReview
-//     // return storageService.post(CAR_KEY, {...car, createdAt: Date.now()})
-//     // return axios.post(CAR_URL, car).then(res => res.data)
-
-// }
-
-
-
-
-
-
 function getEmptyCar() {
-    return { name: '', price: 150, type: 'Funny', inStock: true }
+    return {
+        vendor: '',
+        model: '',
+        bodyStyle: '',
+        year: null,
+        transmission: '',
+        drivetrain: '',
+        mileage: 0,
+        engine: '',
+        exteriorColor: '',
+        interiorColor: '',
+        desc: '',
+        equipments: [],
+        owner: {},
+        imgUrls: [],
+        location: {
+            address: '',
+            lat: 0,
+            lng: 0
+        },
+        comments: [],
+        auction: 
+        {
+            bids: [],
+            startPrice: 0,
+            status: 'active',
+            createdAt: null,
+            duration: null
+        }
+    }
 }
-
-// function getCarsCountByUserId(userId) {
-//     return axios.get(CAR_URL)
-//         .then(res => console.log('getCarsCountByUserId res:', res))
-//         // .then(res => res.data)
-// }
-
-
 
 // Create Test Data:
 function _createCars() {
-    var cars = JSON.parse(localStorage.getItem(CAR_KEY))
+    var users = JSON.parse(localStorage.getItem('users')) || []
+    if (!users || !users.length) {
+        users = usersDemo;
+        localStorage.setItem('users', JSON.stringify(users))
+    }
+    var cars = JSON.parse(localStorage.getItem(CAR_KEY)) || []
     if (!cars || !cars.length) {
-        cars = demoCars
+        for (i=0;i<100;i++){
+            cars.push(_createCar());
+        }
         localStorage.setItem(CAR_KEY, JSON.stringify(cars))
     }
     return cars;
 }
+
+const vendors = ['Audi','BMW','Golf','Mazda','Ferari']
+const bodyStyles = ['Coupe','Sedan','Truck','Hatchback'];
+const transmissions = ['Auto','Menual','Robotic'];
+const drivetrains = ['Rear-wheel drive','Front-wheel drive'];
+const colors = ['Blue','Black','Red','Yellow','Green','Gray'];
+
+const usersDemo = 
+[
+    {
+        "_id": "u101",
+        "fullname": "Shuki ben Shuki",
+        "imgUrl": "/img/img1.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u102",
+        "fullname": "Puki ben Puki",
+        "imgUrl": "/img/img2.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u103",
+        "fullname": "Muki ben Muki",
+        "imgUrl": "/img/img3.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u104",
+        "fullname": "Cooki ben Cooki",
+        "imgUrl": "/img/img4.jpg",
+        "isAdmin": false,
+        "username": "a",
+        "password": "a"
+    },
+    {
+        "_id": "u105",
+        "fullname": "Ruti be Ruti",
+        "imgUrl": "/img/img5.jpg",
+        "isAdmin": true,
+        "username": "a",
+        "password": "a"
+    }
+]
+
+function _createCar(){
+    const car = {
+        id: makeId(),
+        vendor: makeRandom(vendors),
+        model: makeId(4),
+        bodyStyle: makeRandom(bodyStyles),
+        year: makeRandomInt(2010,2021),
+        transmission: makeRandom(transmissions),
+        drivetrain: makeRandom(drivetrains),
+        mileage: makeRandomInt(45000,70000),
+        engine: '3.0L I-6',
+        exteriorColor: makeRandom(colors),
+        interiorColor: makeRandom(colors),
+        desc: 'very nice car',
+        equipments: ['equip1','equip2','equip3','equip4'],
+        owner: makeRandomUser(usersDemo),
+        imgUrls: ['shop.jpg','more1.jpg','more2.jpg'],
+        location: {
+            address: "Tel-Aviv, Rotshild 25",
+            lat: 32.9898,
+            lng: 12.28
+        },
+        comments: [
+            {
+                id: makeId(4),
+                "txt": "if i had the cash Id still be bidding",
+                "rate": makeRandomInt(1,5),
+                "by": makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                "txt": "if i had the cash Id still be bidding",
+                "rate": makeRandomInt(1,5),
+                "by": makeRandomUser(usersDemo)
+            },
+            {
+                id: makeId(4),
+                "txt": "if i had the cash Id still be bidding",
+                "rate": makeRandomInt(1,5),
+                "by": makeRandomUser(usersDemo)
+            }
+        ],
+        auction: 
+        {
+            bids: [
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: 80000,
+                    createdAt: Date.now() + 1000*60*60*24
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: 90000,
+                    createdAt: Date.now() + 1000*60*60*24*2
+                },
+                {
+                    id: makeId(4),
+                    by: makeRandomUser(usersDemo), 
+                    bidPrice: 1000000,
+                    createdAt: Date.now() + 1000*60*60*24*3
+                },
+            ],
+            startPrice: 45000,
+            status: 'active',
+            createdAt: Date.now(),
+            duration: Date.now() + 1000*60*60*24*7
+        }
+    }
+    return car
+}
+
+function makeId(length = 5) {
+    var txt = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return txt;
+}
+
+function makeRandom(array){
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function makeRandomInt(min,max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function makeRandomUser(users) {
+    const idx = makeRandomInt(0,users.length-1);
+    minimalUser = {
+        _id: users[idx]._id,
+        fullname = users[idx].fullname,
+        imgUrl = users[idx].imgUrl
+    }
+    return minimalUser
+}
+
