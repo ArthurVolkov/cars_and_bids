@@ -92,61 +92,60 @@ async function query(filterBy) {
 
     var cars =  await storageService.query('cars');
     
+    const regex = new RegExp(filterBy.name, 'i')
+
     if (filterBy.bodyStyles[0] === 'all' && filterBy.vendors[0] === 'all') {
         cars = cars.filter(car => { 
-            return ((car.vendor.includes(filterBy.name.toLowerCase()) ||
-            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
-            car.transmission.includes(filterBy.name.toLowerCase()) ||
-            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
-            car.engine.includes(filterBy.name.toLowerCase()) ||
-            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
-            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
-            car.desc.includes(filterBy.name.toLowerCase())) &&
-            car.year >= filterBy.year.from && car.year <= filterBy.year.to)
+            return (regex.test(car.vendor) ||
+                    regex.test(car.bodyStyle) ||
+                    regex.test(car.transmission) ||
+                    regex.test(car.drivetrain) ||
+                    regex.test(car.engine) ||
+                    regex.test(car.exteriorColor) ||
+                    regex.test(car.interiorColor) ||
+                    regex.test(car.desc)) &&
+                    car.year >= filterBy.year.from && car.year <= filterBy.year.to
         })
-        console.log()
-        console.log(filterBy.year.from)
-        console.log(filterBy.year.to)
-        console.log('hohoho',cars)    
     } else if (filterBy.bodyStyles[0] === 'all') {
         cars = cars.filter(car => { 
-            (car.vendor.includes(filterBy.name.toLowerCase()) ||
-            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
-            car.transmission.includes(filterBy.name.toLowerCase()) ||
-            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
-            car.engine.includes(filterBy.name.toLowerCase()) ||
-            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
-            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
-            car.desc.includes(filterBy.name.toLowerCase())) &&
-            car.year >= filterBy.year.form && car.year <= filterBy.year.to &&
-            filterBy.vendors.includes(car.vendor) 
-        })            
+            return (regex.test(car.vendor) ||
+                    regex.test(car.bodyStyle) ||
+                    regex.test(car.transmission) ||
+                    regex.test(car.drivetrain) ||
+                    regex.test(car.engine) ||
+                    regex.test(car.exteriorColor) ||
+                    regex.test(car.interiorColor) ||
+                    regex.test(car.desc)) &&
+                    car.year >= filterBy.year.from && car.year <= filterBy.year.to &&
+                    filterBy.vendors.includes(car.vendor) 
+
+        })
     } else if (filterBy.vendors[0] === 'all') {
         cars = cars.filter(car => { 
-            (car.vendor.includes(filterBy.name.toLowerCase()) ||
-            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
-            car.transmission.includes(filterBy.name.toLowerCase()) ||
-            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
-            car.engine.includes(filterBy.name.toLowerCase()) ||
-            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
-            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
-            car.desc.includes(filterBy.name.toLowerCase())) &&
-            car.year >= filterBy.year.form && car.year <= filterBy.year.to &&
-            filterBy.bodyStyles.includes(car.bodyStyle) 
-        })            
+            return (regex.test(car.vendor) ||
+                    regex.test(car.bodyStyle) ||
+                    regex.test(car.transmission) ||
+                    regex.test(car.drivetrain) ||
+                    regex.test(car.engine) ||
+                    regex.test(car.exteriorColor) ||
+                    regex.test(car.interiorColor) ||
+                    regex.test(car.desc)) &&
+                    car.year >= filterBy.year.from && car.year <= filterBy.year.to &&
+                    filterBy.bodyStyles.includes(car.bodyStyle) 
+        })   
     } else {
         cars = cars.filter(car => { 
-            (car.vendor.includes(filterBy.name.toLowerCase()) ||
-            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
-            car.transmission.includes(filterBy.name.toLowerCase()) ||
-            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
-            car.engine.includes(filterBy.name.toLowerCase()) ||
-            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
-            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
-            car.desc.includes(filterBy.name.toLowerCase())) &&
-            car.year >= filterBy.year.form && car.year <= filterBy.year.to &&
-            filterBy.bodyStyle.includes(car.bodyStyle) &&
-            filterBy.vendors.includes(car.vendor)
+            return (regex.test(car.vendor) ||
+                    regex.test(car.bodyStyle) ||
+                    regex.test(car.transmission) ||
+                    regex.test(car.drivetrain) ||
+                    regex.test(car.engine) ||
+                    regex.test(car.exteriorColor) ||
+                    regex.test(car.interiorColor) ||
+                    regex.test(car.desc)) &&
+                    car.year >= filterBy.year.from && car.year <= filterBy.year.to &&
+                    filterBy.vendors.includes(car.vendor) &&
+                    filterBy.bodyStyles.includes(car.bodyStyle) 
         })
     }
     var sortCars = [...cars];
