@@ -7,8 +7,7 @@
     </button>
     <div v-if="yearsRangeIsOpen" class="block years-range">
       <el-slider
-        v-model="filterBy.byYears"
-        @change="setFilter"
+        v-model="filterBy.years"
         range
         :min="1970"
         :max="2021"
@@ -17,36 +16,8 @@
         >
       </el-slider>
     </div>
-    <!-- <el-select
-        v-model="filterBy.fromYear"
-        @change="setFilter"
-        placeholder="From Year"
-      >
-        <el-option
-          v-for="item in years"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
-
-      <el-select
-        v-model="filterBy.toYear"
-        @change="setFilter"
-        placeholder="To Year"
-      >
-        <el-option
-          v-for="item in years"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>  -->
 
     <div class="flex flex-col justify-center align-center">
-      <!-- <label for="typeFilter">Tipe:</label> -->
       <el-select
         v-model="filterBy.bodyStyles"
         @change="setFilter"
@@ -101,6 +72,7 @@
 //     timeout = setTimeout(() => callback.apply(context, args), wait);
 //   };
 // }
+import { carService } from "@/services/car.service.js";
 
 export default {
 
@@ -109,31 +81,19 @@ export default {
   data() {
     return {
       filterBy: {
-        byYears: [1970, 2021],
-        year: {
-          from: 0,
-          to: 2021
-        },
-        bodyStyles: [],
+        years: [1970,2021],
+        bodyStyles: '',
         vendors: [],
         sortBy: '',
       },
       years: [],
-      bodyStyles: [],
-      vendors: [],
+      bodyStyles: carService.getBodyStyleList() ,
+      vendors: carService.getVendorList(),
       yearsRangeIsOpen: false,
-
-      // marks: {
-      //   1970: '1970',
-      //   2021: '2021',
-      // }
-
-
     }
   },
   computed: {
     marks() {
-
       return {
         [this.filterBy.byYears[0]]: '' + this.filterBy.byYears[0],
         [this.filterBy.byYears[1]]: '' + this.filterBy.byYears[1],
@@ -143,10 +103,9 @@ export default {
   },
   methods: {
     setFilter() {
-      console.log('this.filterBy:', this.filterBy)
+      console.log('In Car Filter',this.filterBy.vendors)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$store.dispatch({ type: 'loadCars' })
-      // this.$emit('setFilter', this.filterBy)
     },
     setSort(sortBy) {
       this.filterBy.sortBy = sortBy
@@ -162,12 +121,11 @@ export default {
       this.years.push({ value: i, label: i });
     }
 
+    // const bodyStyles = ['All', 'Coupe', 'Convertible', 'Sedan', 'SUV/Crossover', 'Hatchback']
+    // this.bodyStyles = bodyStyles.map(item => { return { value: item, label: item } })
 
-    const bodyStyles = ['All', 'Coupe', 'Convertible', 'Sedan', 'SUV/Crossover', 'Hatchback']
-    this.bodyStyles = bodyStyles.map(item => { return { value: item, label: item } })
-
-    const vendors = ["Abarth", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daewoo", "Daihatsu", "Dodge", "Donkervoort", "DS", "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai", "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM", "Lada", "Lamborghini", "Lancia", "Land Rover", "Landwind", "Lexus", "Lotus", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "MG", "Mini", "Mitsubishi", "Morgan", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Rover", "Saab", "Seat", "Skoda", "Smart", "SsangYong", "Subaru", "Suzuki", "Tesla", "Toyota", "Volkswagen", "Volvo"]
-    this.vendors = vendors.map(item => { return { value: item, label: item } })
+    // const vendors = ["Abarth", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daewoo", "Daihatsu", "Dodge", "Donkervoort", "DS", "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai", "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM", "Lada", "Lamborghini", "Lancia", "Land Rover", "Landwind", "Lexus", "Lotus", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "MG", "Mini", "Mitsubishi", "Morgan", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Rover", "Saab", "Seat", "Skoda", "Smart", "SsangYong", "Subaru", "Suzuki", "Tesla", "Toyota", "Volkswagen", "Volvo"]
+    // this.vendors = vendors.map(item => { return { value: item, label: item } })
   },
 }
 </script>

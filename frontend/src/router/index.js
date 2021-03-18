@@ -6,7 +6,6 @@ import carApp from '../views/car-app.vue'
 import carDetails from '../views/car-details.vue'
 import carEdit from '../views/car-edit.vue'
 
-
 Vue.use(VueRouter)
 
 const routes = [

@@ -70,7 +70,11 @@ export const carService = {
     setFilter,
     nextPage,
     makeId,
-    makeRandomUser
+    makeRandomUser,
+    getBodyStyleList,
+    getVendorList,
+    getTransmissionList,
+    getDrivetrainList
     // saveReview
     // getCarsCountByUserId
 }
@@ -84,24 +88,26 @@ function nextPage() {
 }
 
 async function query(filterBy) {
-    console.log('filterBy:', filterBy)
+    // console.log('filterBy Before:', filterBy)
+
+    if (!filterBy.name) filterBy.name = ''
+    if (!filterBy.bodyStyles) filterBy.bodyStyles = 'all'
+    if (filterBy.bodyStyles === 'All') filterBy.bodyStyles = 'all'
+    if (!filterBy.vendors || !filterBy.vendors.length) filterBy.vendors = ['all']
+    if (!filterBy.years) filterBy.years = [1970,2021]
+
+    // console.log('filterBy After:', filterBy)
 
     // var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
     // const cars = await httpService.get(`car${queryStr}`)
     // return cars
 
     var cars =  await storageService.query('cars');
-    console.log('cars:', cars)
+    // console.log('cars:', cars)
 
-    cars = cars.filter(car => {
-        
-        return filterBy.vendors.includes(car.vendor) || filterBy.vendors.includes('all') || !filterBy.vendors
-        // return car.vendor === filterBy.
-    })
-    
     const regex = new RegExp(filterBy.name, 'i')
 
-    if (filterBy.bodyStyles[0] === 'all' && filterBy.vendors[0] === 'all') {
+    if (filterBy.bodyStyles === 'all' && filterBy.vendors[0] === 'all') {
         cars = cars.filter(car => { 
             return (regex.test(car.vendor) ||
                     regex.test(car.bodyStyle) ||
@@ -111,9 +117,9 @@ async function query(filterBy) {
                     regex.test(car.exteriorColor) ||
                     regex.test(car.interiorColor) ||
                     regex.test(car.desc)) &&
-                    car.year >= filterBy.year.from && car.year <= filterBy.year.to
+                    car.year >= filterBy.years[0] && car.year <= filterBy.years[1]
         })
-    } else if (filterBy.bodyStyles[0] === 'all') {
+    } else if (filterBy.bodyStyles === 'all') {
         cars = cars.filter(car => { 
             return (regex.test(car.vendor) ||
                     regex.test(car.bodyStyle) ||
@@ -123,7 +129,7 @@ async function query(filterBy) {
                     regex.test(car.exteriorColor) ||
                     regex.test(car.interiorColor) ||
                     regex.test(car.desc)) &&
-                    car.year >= filterBy.year.from && car.year <= filterBy.year.to &&
+                    car.year >= filterBy.years[0] && car.year <= filterBy.years[1] &&
                     filterBy.vendors.includes(car.vendor) 
 
         })
@@ -137,8 +143,8 @@ async function query(filterBy) {
                     regex.test(car.exteriorColor) ||
                     regex.test(car.interiorColor) ||
                     regex.test(car.desc)) &&
-                    car.year >= filterBy.year.from && car.year <= filterBy.year.to &&
-                    filterBy.bodyStyles.includes(car.bodyStyle) 
+                    car.year >= filterBy.years[0] && car.year <= filterBy.years[1] &&
+                    filterBy.bodyStyles === car.bodyStyle 
         })   
     } else {
         cars = cars.filter(car => { 
@@ -150,9 +156,9 @@ async function query(filterBy) {
                     regex.test(car.exteriorColor) ||
                     regex.test(car.interiorColor) ||
                     regex.test(car.desc)) &&
-                    car.year >= filterBy.year.from && car.year <= filterBy.year.to &&
+                    car.year >= filterBy.years[0] && car.year <= filterBy.years[1] &&
                     filterBy.vendors.includes(car.vendor) &&
-                    filterBy.bodyStyles.includes(car.bodyStyle) 
+                    filterBy.bodyStyles === car.bodyStyle 
         })
     }
     var sortCars = [...cars];
@@ -191,6 +197,24 @@ async function save(car) {
         return addedCar
     }
 }
+
+function getVendorList() {
+    var vendors = ["Abarth", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daewoo", "Daihatsu", "Dodge", "Donkervoort", "DS", "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai", "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM", "Lada", "Lamborghini", "Lancia", "Land Rover", "Landwind", "Lexus", "Lotus", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "MG", "Mini", "Mitsubishi", "Morgan", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Rover", "Saab", "Seat", "Skoda", "Smart", "SsangYong", "Subaru", "Suzuki", "Tesla", "Toyota", "Volkswagen", "Volvo"]
+    return vendors.map(item => { return { value: item, label: item } })
+}
+
+function getBodyStyleList() {
+    var bodyStyles = ['All', 'Coupe', 'Convertible', 'Sedan', 'SUV/Crossover', 'Hatchback']
+    return bodyStyles.map(item => { return { value: item, label: item } })
+}
+
+function getTransmissionList() {
+    return transmissions.map(item => { return { value: item, label: item } })
+}
+
+function getDrivetrainList() {
+    return drivetrains.map(item => { return { value: item, label: item } })
+} 
 
 function getEmptyCar() {
     return {

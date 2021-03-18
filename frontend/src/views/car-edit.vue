@@ -2,40 +2,110 @@
   <section v-if="carToEdit" class="car-edit flex flex-col align-center">
     <h2>{{ title }}</h2>
     <form @submit.prevent="saveCar">
-      <label for="input-name">Set name:</label>
-      <el-input
-        id="input-name"
-        type="text"
-        placeholder="Your next car name"
-        v-model="carToEdit.name"
-        clearable
-      >
-      </el-input>
-      <label for="input-price">Set price:</label>
+      <!-- <label for="input-price">Set price:</label>
       <el-input-number
         class="el-input"
         id="input-price"
         v-model.number="carToEdit.price"
         :min="1"
       >
-      </el-input-number>
-      <label for="typeFilter">Tipe:</label>
+      </el-input-number> -->
+
+    <div class="flex flex-col justify-center align-center">
       <el-select
-        id="typeFilter"
-        v-model="carToEdit.type"
-        class="el-input"
-        placeholder="Tipe:"
+        v-model="carToEdit.bodyStyle"
+        placeholder="Body style"
       >
         <el-option
-          v-for="item in tipes"
+          v-for="item in bodyStyles"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         >
         </el-option>
       </el-select>
-      <button>Save</button>
-      <router-link to="/car" class="back-btn">Back</router-link>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <!-- <label for="sort">Sort:</label> -->
+      <el-select
+        v-model="carToEdit.vendor"
+        @change="setModel"
+        placeholder="vendors"
+      >
+        <el-option
+          v-for="item in vendors"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <!-- <label for="sort">Sort:</label> -->
+      <el-select
+        v-model="carToEdit.model"
+        placeholder="model"
+      >
+        <el-option
+          v-for="item in models"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <el-select
+        v-model.number="carToEdit.year"
+        placeholder="year"
+      >
+        <el-option
+          v-for="item in years"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <el-select
+        v-model="carToEdit.transmission"
+        placeholder="transmission"
+      >
+        <el-option
+          v-for="item in transmissions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <el-select
+        v-model="carToEdit.drivetrain"
+        placeholder="drivetrain"
+      >
+        <el-option
+          v-for="item in drivetrains"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <button>Save</button>
+    <router-link to="/car" class="back-btn">Back</router-link>
     </form>
   </section>
   <div
@@ -47,28 +117,22 @@
   </div>
 </template>
 
-
-
 <script>
+import { dataService } from "@/services/review.service.js";
 import { carService } from "@/services/car.service.js";
 import { showMsg } from '../services/eventBus.service.js'
-
 
 export default {
   name: "car-edit",
   data() {
     return {
       carToEdit: null,
-      tipes: [{
-        value: 'Funny',
-        label: 'Funny'
-      }, {
-        value: 'Adult',
-        label: 'Adult'
-      }, {
-        value: 'Educational',
-        label: 'Educational'
-      }],
+      bodyStyles: carService.getBodyStyleList(),
+      vendors: carService.getVendorList(),
+      models: dataService.getCars(''),
+      years: [],
+      transmissions: carService.getTransmissionList(),
+      drivetrains: carService.getDrivetrainList()
     }
   },
   computed: {
@@ -83,6 +147,9 @@ export default {
     },
   },
   methods: {
+    setModel() {
+      this.models = dataService.getCars(this.carToEdit.vendor)
+    },
     async saveCar() {
       console.log('Saving...', this.carToEdit);
       try {
@@ -101,6 +168,9 @@ export default {
     },
   },
   created() {
+    for (let i = 2021; i >= 1970; i--) {
+      this.years.push({ value: i, label: i });
+    }
     if (this.carId) {
       try {
         carService.getById(this.carId)
