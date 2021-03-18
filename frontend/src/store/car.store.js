@@ -5,13 +5,18 @@ export const carStore = {
     state: {
         cars: [],
         carsCount: 0,
+  
         filterBy: {
             name: '',
-            inStock: 'all',
-            type: 'all',
+            year: {
+                from:0,
+                to:2021
+              },
+            bodyStyles: ['all'],
+            vendors: ['all'],
             pageIdx: 0,
             pageSize: 6,
-            sortBy: 'name'
+            sortBy: 'ending-soon'
         },
         isLoading: false,
     },
@@ -64,7 +69,13 @@ export const carStore = {
         },
         setFilter(state, { filterBy }) {
             console.log('filterBy:', filterBy)
-            state.filterBy = filterBy
+            state.filterBy.year = filterBy.year;
+            state.filterBy.bodyStyles = filterBy.bodyStyles;
+            state.filterBy.vendors = filterBy.vendors;
+        },
+        setFilterName(state, { name }) {
+            //console.log('filterBy:', filterBy)
+            state.filterBy.name = name;
         },
         setPage(state, { page }) {
             console.log('page:', page)
@@ -82,6 +93,7 @@ export const carStore = {
         async loadCars(context) {
             context.commit({ type: 'setLoading', isLoading: true })
             try {
+                console.log('AAAA',context.state.filterBy)
                 const data = await carService.query(context.state.filterBy)
                 const cars = data[0];
                 const count = data[1];

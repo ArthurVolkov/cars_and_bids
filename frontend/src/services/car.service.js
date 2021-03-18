@@ -89,9 +89,77 @@ async function query(filterBy) {
     // var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
     // const cars = await httpService.get(`car${queryStr}`)
     // return cars
-    const cars =  await storageService.query('cars');
-    const count = cars.length;
-    const data = [cars,count]
+
+    var cars =  await storageService.query('cars');
+    
+    if (filterBy.bodyStyles[0] === 'all' && filterBy.vendors[0] === 'all') {
+        cars = cars.filter(car => { 
+            return ((car.vendor.includes(filterBy.name.toLowerCase()) ||
+            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
+            car.transmission.includes(filterBy.name.toLowerCase()) ||
+            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
+            car.engine.includes(filterBy.name.toLowerCase()) ||
+            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
+            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
+            car.desc.includes(filterBy.name.toLowerCase())) &&
+            car.year >= filterBy.year.from && car.year <= filterBy.year.to)
+        })
+        console.log()
+        console.log(filterBy.year.from)
+        console.log(filterBy.year.to)
+        console.log('hohoho',cars)    
+    } else if (filterBy.bodyStyles[0] === 'all') {
+        cars = cars.filter(car => { 
+            (car.vendor.includes(filterBy.name.toLowerCase()) ||
+            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
+            car.transmission.includes(filterBy.name.toLowerCase()) ||
+            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
+            car.engine.includes(filterBy.name.toLowerCase()) ||
+            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
+            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
+            car.desc.includes(filterBy.name.toLowerCase())) &&
+            car.year >= filterBy.year.form && car.year <= filterBy.year.to &&
+            filterBy.vendors.includes(car.vendor) 
+        })            
+    } else if (filterBy.vendors[0] === 'all') {
+        cars = cars.filter(car => { 
+            (car.vendor.includes(filterBy.name.toLowerCase()) ||
+            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
+            car.transmission.includes(filterBy.name.toLowerCase()) ||
+            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
+            car.engine.includes(filterBy.name.toLowerCase()) ||
+            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
+            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
+            car.desc.includes(filterBy.name.toLowerCase())) &&
+            car.year >= filterBy.year.form && car.year <= filterBy.year.to &&
+            filterBy.bodyStyles.includes(car.bodyStyle) 
+        })            
+    } else {
+        cars = cars.filter(car => { 
+            (car.vendor.includes(filterBy.name.toLowerCase()) ||
+            car.bodyStyle.includes(filterBy.name.toLowerCase()) ||
+            car.transmission.includes(filterBy.name.toLowerCase()) ||
+            car.drivetrain.includes(filterBy.name.toLowerCase()) ||
+            car.engine.includes(filterBy.name.toLowerCase()) ||
+            car.exteriorColor.includes(filterBy.name.toLowerCase()) ||
+            car.interiorColor.includes(filterBy.name.toLowerCase()) ||
+            car.desc.includes(filterBy.name.toLowerCase())) &&
+            car.year >= filterBy.year.form && car.year <= filterBy.year.to &&
+            filterBy.bodyStyle.includes(car.bodyStyle) &&
+            filterBy.vendors.includes(car.vendor)
+        })
+    }
+    var sortCars = [...cars];
+    if (filterBy.sortBy === 'ending-soon'){
+        sortCars.sort((car1,car2) => {return (car1.auction.createdAt + car1.auction.duration - Date.now())-(car2.auction.createdAt + car2.auction.duration - Date.now())})
+    } else if (filterBy.sortBy === 'newly-listed') {
+        sortCart.sort((car1,car2) => {return car1.auction.createdAt - car2.auction.createdAt})
+    } else if (filterBy.sortBy === 'lowest-mileage') {
+        sortCars.sort((car1,car2) => {return car1.mileage - car2.mileage})
+    }
+
+    const count = sortCars.length;
+    const data = [sortCars,count]
     return data
 }
 
