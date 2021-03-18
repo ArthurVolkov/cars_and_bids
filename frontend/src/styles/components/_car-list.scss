@@ -1,12 +1,42 @@
 .car-preview {
     // border: 1px solid $clr3;
+    position: relative;
     align-items: flex-start;
+
+    p {
+        margin: 0;
+        font-size: .9em;
+    }
 
     .img-container {
         height: 50%;
-
+        margin-bottom: 30px;
         img {
             border-radius: 10px;
         }
+        & img:hover {
+            width: 102%;
+            transition: width .6s;
+        }
+    }
+
+    .bid-info {
+        position: absolute;
+        top: 44%;
+        left: 5%;
+        background-color: $clr4;
+        opacity: .9;
+        width: 90%;
+        // align-self: center;
+        padding: 8px 15px;
+        border-radius: 2em;
+
+        p {
+            font-weight: 600;
+        }
+    }
+
+    .preview-address {
+        color: $clr3;
     }
 }

@@ -1,30 +1,33 @@
 <template>
   <li class="car-preview flex flex-col">
-    <div class="img-container">
-      <!-- <img src="../assets/images/22222/1.jpg" alt="" /> -->
-      <!-- <img src="/assets/images/22222/1.jpg" alt=""> -->
-      <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+    <router-link class="img-container" :to="'/car/details/' + car._id"
+      ><img :src="getImgUrl(car.imgUrls[0])" alt="" /></router-link
+    >
+
+
+    <div class="bid-info flex justify-between align-center">
+      <p>⏱ {{ timeLeft }}</p>
+      <!-- <p>⏱ {{ timeLeft | duration("humanize") }}</p> -->
+      <p>Bid: {{ lastBid }}</p>
     </div>
 
     <h3>{{ car.year }} {{ car.vendor }} {{ car.model }}</h3>
-    <p>Mileage: {{ car.mileage }}</p>
-    <p>Bid: {{ lastBid }}</p>
+    <p>{{ car.engine }} Engine,  {{car.transmission}} Gear</p>
+    <p>~ {{ car.mileage }} Miles</p>
+    <p class="preview-address">{{ car.location.address }}</p>
     <!-- <p>Time Left: {{ timeLeft }}</p> -->
-    <p>Time Left: {{ timeLeft | duration('humanize') }}</p>
     <div class="preview-btn-container flex justify-between align-center">
-      <router-link class="preview-btn" :to="'/car/details/' + car._id"
+      <!-- <router-link class="preview-btn" :to="'/car/details/' + car._id"
         >Details</router-link
-      >
-      <!-- <router-link class="preview-btn" :to="'/car/edit/' + car._id"
-        >Edit</router-link
-      >
-      <button class="preview-remove-btn" @click="removeCar(car)">X</button> -->
+      > -->
     </div>
   </li>
 </template>
 
 <script>
 //import carPreview from "@/cmps/car-preview.vue";
+var moment = require("moment");
+var momentDurationFormatSetup = require("moment-duration-format");
 
 export default {
   name: "car-preview",
@@ -41,14 +44,21 @@ export default {
   },
   computed: {
     lastBid() {
+      var bid = 0
       if (this.car.auction.bids.length) {
-        return this.car.auction.bids[0].bidPrice
+        bid = this.car.auction.bids[0].bidPrice
       } else {
-        return this.car.auction.startPrice
+        bid = this.car.auction.startPrice
       }
+      // return bid
+      return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
     timeLeft() {
-      return this.car.auction.createdAt + this.car.auction.duration - this.now
+      const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
+      if (diff <= 0) return 'Finished'
+      return moment.duration(diff).format()
+
+      return diff.this.$moment.utc(duration.as('milliseconds')).format('HH:mm:ss')
     }
     // createdAt() {
     //   const now = new Date(Date.now());
