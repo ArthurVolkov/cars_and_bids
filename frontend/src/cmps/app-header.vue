@@ -3,7 +3,7 @@
     <div class="header-container flex align-center justify-between">
       <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
 
-      <el-input placeholder="Search for car" v-model="searchStr" clearable>
+      <el-input @input="setFilterName" placeholder="Search for car" v-model="filterName" clearable>
       </el-input>
       <router-link to="/car" class="btn">Explore</router-link>
       <router-link to="/car/edit" class="btn">Sell your Car</router-link>
@@ -17,10 +17,16 @@
 
 <script>
 export default {
-  name: "app-nav",
+  name: "app-header",
   data() {
     return {
-      searchStr: ''
+      filterName: ''
+    }
+  },
+  methods: {
+    setFilterName() {
+      this.$store.commit({type: 'setFilterName', name: this.filterName})
+      this.$store.dispatch({ type: 'loadCars'})
     }
   }
 };
