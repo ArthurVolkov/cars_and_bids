@@ -11,25 +11,30 @@
     .img-container {
         height: 50%;
         margin-bottom: 30px;
-        img {
-            border-radius: 10px;
-        }
-        & img:hover {
-            width: 102%;
-            transition: width .6s;
+        overflow: hidden;
+        border-radius: 10px;
+
+        img:hover {
+            transform: scale(1.05);
+            transition: .8s;
+            // width: 102%;
+            // transition: width .6s;
         }
     }
 
     .bid-info {
         position: absolute;
-        top: 44%;
+        top: 47%;
         left: 5%;
-        background-color: $clr4;
+        background-color: $clr11;
+
+        box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.9);
+
         opacity: .9;
         width: 90%;
         // align-self: center;
         padding: 8px 15px;
-        border-radius: 2em;
+        border-radius: 10px;
 
         p {
             font-weight: 600;

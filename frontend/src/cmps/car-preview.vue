@@ -8,7 +8,7 @@
     <div class="bid-info flex justify-between align-center">
       <p>⏱ {{ timeLeft }}</p>
       <!-- <p>⏱ {{ timeLeft | duration("humanize") }}</p> -->
-      <p>Bid: {{ lastBid }}</p>
+      <p>Current Bid: {{ lastBid }}</p>
     </div>
 
     <h3>{{ car.year }} {{ car.vendor }} {{ car.model }}</h3>

@@ -69,17 +69,16 @@ button.sort-btn {
         border-bottom: 2px solid $clr1;
         margin-bottom: -1px;
     }
-    // border-radius: 5px;
-    // padding: 5px;
-    // margin: 5px;
-    // background-color: $clr2;
-    // text-decoration: none;
-    // font-weight: 600;
-    // color: $clr1;
-    // text-align: center;
-    // &:hover {
-    //     filter: brightness(80%);
-    // }
+}
+
+button.filter-btn {
+    background-color: white;
+    border: 1px solid $clr4;
+    border-radius: 2em;
+    outline: none;
+    &:hover {
+        // border-color: $clr3;
+    }
 }
 
 a {

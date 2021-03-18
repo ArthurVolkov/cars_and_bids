@@ -1,8 +1,9 @@
 .car-app {
     .car-filter {
+        position: relative;
         display: flex;
         padding: 10px 0;
-        margin: 10px 0;
+        margin: 10px 0 40px;
         border-radius: 10px;
 
         > * {
@@ -14,18 +15,6 @@
             width: 120px;
         }
 
-        > *:nth-child(2) {
-            width: 120px;
-        }
-
-        > *:nth-child(3) {
-            width: 130px;
-        }
-
-        > *:nth-child(4) {
-            width: 140px;
-        }
-
         > *:last-child {
             margin-right: 0;
         }
@@ -35,6 +24,18 @@
         }
         .el-input.is-focus .el-input__inner {
             border-color: $clr6;
+        }
+
+        .years-range {
+            position: absolute;
+            top: 55px;
+            width: 300px;
+            margin: 0;
+            background-color: white;
+            border: 1px solid $clr4;
+            border-radius: 2em;
+            outline: none;
+            padding: 0 15px;
         }
     }
 }

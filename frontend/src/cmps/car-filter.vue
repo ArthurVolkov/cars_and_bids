@@ -1,7 +1,21 @@
 <template>
   <section class="car-filter flex justify-between">
-    <div class="flex flex-col justify-center align-center">
-      <el-select
+    <!-- <div class="flex flex-col justify-center align-center"> -->
+
+    <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
+      Years
+    </button>
+    <div v-if="yearsRangeIsOpen" class="block years-range">
+      <el-slider
+        v-model="filterBy.byYears"
+        range
+        :min="1970"
+        :max="2021"
+        show-stops="true"
+      >
+      </el-slider>
+    </div>
+    <!-- <el-select
         v-model="filterBy.fromYear"
         @change="setFilter"
         placeholder="From Year"
@@ -14,9 +28,7 @@
         >
         </el-option>
       </el-select>
-    </div>
 
-    <div class="flex flex-col justify-center align-center">
       <el-select
         v-model="filterBy.toYear"
         @change="setFilter"
@@ -29,8 +41,7 @@
           :value="item.value"
         >
         </el-option>
-      </el-select>
-    </div>
+      </el-select>  -->
 
     <div class="flex flex-col justify-center align-center">
       <!-- <label for="typeFilter">Tipe:</label> -->
@@ -55,6 +66,8 @@
         v-model="filterBy.manufacturer"
         @change="setFilter"
         placeholder="Manufacturers"
+        multiple
+        collapse-tags
       >
         <el-option
           v-for="item in manufacturers"
@@ -65,9 +78,15 @@
         </el-option>
       </el-select>
     </div>
-      <button @click="setFilter('ending-soon')" class="sort-btn">Ending soon</button>
-      <button @click="setFilter('newly-listed')" class="sort-btn">Newly listed</button>
-      <button @click="setFilter('lowest-mileage')" class="sort-btn">Lowest mileage</button>
+    <button @click="setFilter('ending-soon')" class="sort-btn">
+      Ending soon
+    </button>
+    <button @click="setFilter('newly-listed')" class="sort-btn">
+      Newly listed
+    </button>
+    <button @click="setFilter('lowest-mileage')" class="sort-btn">
+      Lowest mileage
+    </button>
   </section>
 </template>
 
@@ -85,15 +104,17 @@ export default {
   data() {
     return {
       filterBy: {
+        byYears: [1970, 2021],
         fromYear: '',
         toYear: '',
         bodyStyle: '',
         manufacturer: '',
-      sortBy: '',
+        sortBy: '',
       },
       years: [],
       bodyStyles: [],
-      manufacturers: []
+      manufacturers: [],
+      yearsRangeIsOpen: false
       // bodyStyles: [{
       //   value: 'all',
       //   label: 'All'
@@ -125,6 +146,7 @@ export default {
     for (let i = 2021; i >= 1970; i--) {
       this.years.push({ value: i, label: i });
     }
+
 
     const bodyStyles = ['All', 'Coupe', 'Convertible', 'Sedan', 'SUV/Crossover', 'Hatchback']
     this.bodyStyles = bodyStyles.map(item => { return { value: item, label: item } })
