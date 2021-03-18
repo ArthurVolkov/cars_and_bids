@@ -1,3 +1,4 @@
+
 .car-preview {
     // border: 1px solid $clr3;
     position: relative;
@@ -10,10 +11,20 @@
 
     .img-container {
         height: 50%;
-        margin-bottom: 30px;
+        width: 100%;
+        margin-bottom: 40px;
         overflow: hidden;
         border-radius: 10px;
 
+        .block {
+            height: 100%;
+        }
+        // .el-carousel__container{
+        //     height: 100%;
+        // }
+        img {
+            height: 200px; ////////////////////////
+        }
         img:hover {
             transform: scale(1.05);
             transition: .8s;
@@ -27,7 +38,7 @@
         top: 47%;
         left: 5%;
         background-color: $clr11;
-
+        z-index: 30;
         box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.9);
 
         opacity: .9;
@@ -38,6 +49,11 @@
 
         p {
             font-weight: 600;
+        }
+
+        .description {
+            font-size: .8em;
+            font-weight: 400;
         }
     }
 

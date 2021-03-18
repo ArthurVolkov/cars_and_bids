@@ -1,7 +1,9 @@
 
 .header {
+    position: fixed;
     height: 80px;
     background-color: $clr4;
+    z-index: 50;
 
     .logo {
         font-size: 2rem;

@@ -1,9 +1,11 @@
 .car-app {
+
+    margin-top: 80px;
+
     .car-filter {
         position: relative;
         display: flex;
         padding: 10px 0;
-        margin: 10px 0 40px;
         border-radius: 10px;
 
         > * {
@@ -29,13 +31,14 @@
         .years-range {
             position: absolute;
             top: 55px;
-            width: 300px;
+            width: 350px;
             margin: 0;
             background-color: white;
             border: 1px solid $clr4;
             border-radius: 2em;
             outline: none;
-            padding: 0 15px;
+            padding: 15px 40px;
+            z-index: 20;
         }
     }
 }

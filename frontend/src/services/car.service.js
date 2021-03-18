@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const vendors = ['Audi','BMW','Golf','Mazda','Ferari']
 const bodyStyles = ['Coupe','Sedan','Truck','Hatchback'];
-const transmissions = ['Auto','Menual','Robotic'];
+const transmissions = ['Automatic','Menual','Robotic'];
 const drivetrains = ['Rear-wheel drive','Front-wheel drive'];
 const colors = ['Blue','Black','Red','Yellow','Green','Gray'];
 
@@ -360,7 +360,7 @@ function _createDemoCar1(){
         model: '550i',
         bodyStyle: 'Sedan',
         year: 2014,
-        transmission: 'Auto',
+        transmission: 'Automatic',
         drivetrain: '4WD/AWD',
         mileage: 91100,
         engine: '4.4L Turbocharged V8',
@@ -375,9 +375,11 @@ function _createDemoCar1(){
         owner: makeRandomUser(usersDemo),
         imgUrls: [
             'images/' + _id + '/1.jpg',
-            'images/' + _id + '/2.jpeg',
-            'images/' + _id + '/3.jpeg',
-            'images/' + _id + '/4.jpeg'],
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/4.jpg',
+            'images/' + _id + '/1.jpg'
+        ],
         location: {
             address: 'Chicago, IL 60634',
             lat: 41.950401,
@@ -443,7 +445,7 @@ function _createDemoCar2(){
         model: 'S6',
         bodyStyle: 'Sedan',
         year: 2008,
-        transmission: 'Auto',
+        transmission: 'Automatic',
         drivetrain: '4WD/AWD',
         mileage: 135700,
         engine: '5.2L V10',
@@ -460,6 +462,7 @@ function _createDemoCar2(){
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
             'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Martinez, CA 94553',
@@ -543,6 +546,7 @@ function _createDemoCar3(){
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
             'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Austin, TX 78750',
@@ -609,7 +613,7 @@ function _createDemoCar4(){
         model: 'M5',
         bodyStyle: 'Sedan',
         year: 2018,
-        transmission: 'Auto',
+        transmission: 'Automatic',
         drivetrain: '4WD/AWD',
         mileage: 14000,
         engine: '4.4L Turbocharged V8',
@@ -626,6 +630,7 @@ function _createDemoCar4(){
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
             'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Humble, TX 77346',
@@ -692,7 +697,7 @@ function _createDemoCar5(){
         model: 'S5',
         bodyStyle: 'Coupe',
         year: 2013,
-        transmission: 'Auto',
+        transmission: 'Automatic',
         drivetrain: '4WD/AWD',
         mileage: 87400,
         engine: '3.0L Supercharged V6',
@@ -709,6 +714,7 @@ function _createDemoCar5(){
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
             'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Clayton, NC 27527',
@@ -775,7 +781,7 @@ function _createDemoCar6(){
         model: 'G550',
         bodyStyle: 'SUV',
         year: 2017,
-        transmission: 'Auto',
+        transmission: 'Automatic',
         drivetrain: '4WD/AWD',
         mileage: 5500,
         engine: '4.0L Turbocharged V8',
@@ -790,9 +796,10 @@ function _createDemoCar6(){
         owner: makeRandomUser(usersDemo),
         imgUrls: [
             'images/' + _id + '/1.jpg',
-            'images/' + _id + '/2.jfif',
-            'images/' + _id + '/3.jfif',
-            'images/' + _id + '/4.jfif'],
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
         location: {
             address: 'Fort Worth, TX 76108',
             lat: 35.648659,

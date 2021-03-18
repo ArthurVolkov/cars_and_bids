@@ -1,18 +1,35 @@
 <template>
   <li class="car-preview flex flex-col">
-    <router-link class="img-container" :to="'/car/details/' + car._id"
-      ><img :src="getImgUrl(car.imgUrls[0])" alt="" /></router-link
+    <router-link class="img-container" :to="'/car/details/' + car._id">
+      <!-- <img :src="getImgUrl(car.imgUrls[0])" alt=""> -->
+      <div class="block">
+        <el-carousel trigger="click">
+          <el-carousel-item v-for="(img, idx) in car.imgUrls" :key="idx" height="200px">
+            <img :src="getImgUrl(img)" alt="">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+
+      </router-link
     >
 
-
     <div class="bid-info flex justify-between align-center">
-      <p>⏱ {{ timeLeft }}</p>
-      <!-- <p>⏱ {{ timeLeft | duration("humanize") }}</p> -->
-      <p>Current Bid: {{ lastBid }}</p>
+      <div class="flex flex-col justify-center align-center">
+        <p>⏱ {{ timeLeft }}</p>
+        <p class="description">Before ends</p>
+      </div>
+      <div class="flex flex-col justify-center align-center">
+        <p>{{ lastBid }}</p>
+        <p class="description">Current Bid</p>
+      </div>
+      <div class="flex flex-col justify-center align-center">
+        <p>{{ car.auction.bids.length }}</p>
+        <p class="description">Bids</p>
+      </div>
     </div>
 
     <h3>{{ car.year }} {{ car.vendor }} {{ car.model }}</h3>
-    <p>{{ car.engine }} Engine,  {{car.transmission}} Gear</p>
+    <p>{{ car.engine }} Engine, {{ car.transmission }} Gear</p>
     <p>~ {{ car.mileage }} Miles</p>
     <p class="preview-address">{{ car.location.address }}</p>
     <!-- <p>Time Left: {{ timeLeft }}</p> -->
@@ -57,8 +74,6 @@ export default {
       const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
       if (diff <= 0) return 'Finished'
       return moment.duration(diff).format()
-
-      return diff.this.$moment.utc(duration.as('milliseconds')).format('HH:mm:ss')
     }
     // createdAt() {
     //   const now = new Date(Date.now());

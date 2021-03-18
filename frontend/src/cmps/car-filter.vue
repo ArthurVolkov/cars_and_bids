@@ -8,6 +8,7 @@
     <div v-if="yearsRangeIsOpen" class="block years-range">
       <el-slider
         v-model="filterBy.byYears"
+        @change="setFilter"
         range
         :min="1970"
         :max="2021"
@@ -102,9 +103,13 @@
 // }
 
 export default {
+
+
+  
   data() {
     return {
       filterBy: {
+        byYears: [1970, 2021],
         year: {
           from: 0,
           to: 2021
@@ -130,8 +135,9 @@ export default {
     marks() {
 
       return {
-        1970: '1970',
-        2021: '2021',
+        [this.filterBy.byYears[0]]: '' + this.filterBy.byYears[0],
+        [this.filterBy.byYears[1]]: '' + this.filterBy.byYears[1],
+        // 2021: '2021',
       }
     }
   },
@@ -165,3 +171,4 @@ export default {
   },
 }
 </script>
+

@@ -40,6 +40,10 @@
     align-items: center;
 }
 
+.align-self-start {
+    align-self: flex-start;
+}
+
 .grow {
     flex-grow: 1;
 }
