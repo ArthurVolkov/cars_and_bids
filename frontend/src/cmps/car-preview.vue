@@ -11,15 +11,15 @@
     <p>Bid: {{ lastBid }}</p>
     <!-- <p>Time Left: {{ timeLeft }}</p> -->
     <p>Time Left: {{ timeLeft | duration('humanize') }}</p>
-    <!-- <div class="preview-btn-container flex justify-between align-center">
+    <div class="preview-btn-container flex justify-between align-center">
       <router-link class="preview-btn" :to="'/car/details/' + car._id"
         >Details</router-link
       >
-      <router-link class="preview-btn" :to="'/car/edit/' + car._id"
+      <!-- <router-link class="preview-btn" :to="'/car/edit/' + car._id"
         >Edit</router-link
       >
-      <button class="preview-remove-btn" @click="removeCar(car)">X</button>
-    </div> -->
+      <button class="preview-remove-btn" @click="removeCar(car)">X</button> -->
+    </div>
   </li>
 </template>
 

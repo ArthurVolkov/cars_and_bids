@@ -26,32 +26,32 @@ const usersDemo =
         "fullname": "Puki ben Puki",
         "imgUrl": "/img/img2.jpg",
         "isAdmin": false,
-        "username": "a",
-        "password": "a"
+        "username": "b",
+        "password": "b"
     },
     {
         "_id": "u103",
         "fullname": "Muki ben Muki",
         "imgUrl": "/img/img3.jpg",
         "isAdmin": false,
-        "username": "a",
-        "password": "a"
+        "username": "c",
+        "password": "c"
     },
     {
         "_id": "u104",
         "fullname": "Cooki ben Cooki",
         "imgUrl": "/img/img4.jpg",
         "isAdmin": false,
-        "username": "a",
-        "password": "a"
+        "username": "d",
+        "password": "d"
     },
     {
         "_id": "u105",
         "fullname": "Ruti be Ruti",
         "imgUrl": "/img/img5.jpg",
         "isAdmin": true,
-        "username": "a",
-        "password": "a"
+        "username": "e",
+        "password": "e"
     }
 ]
 
@@ -69,6 +69,8 @@ export const carService = {
     getById,
     setFilter,
     nextPage,
+    makeId,
+    makeRandomUser
     // saveReview
     // getCarsCountByUserId
 }
@@ -87,9 +89,9 @@ async function query(filterBy) {
     // var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
     // const cars = await httpService.get(`car${queryStr}`)
     // return cars
-    const data =  await storageService.query('cars');
-    const cars = data[0];
-    const count = data[1];
+    const cars =  await storageService.query('cars');
+    const count = cars.length;
+    const data = [cars,count]
     return data
 }
 
@@ -97,7 +99,8 @@ async function getById(carId) {
     // const car = await httpService.get(`car/${id}`)
     // console.log('car:', car)
     // return car
-    return await storageService.get('cars',carId)
+    const car = await storageService.get('cars',carId)
+    return car
 }
 
 async function remove(carId) {
@@ -263,7 +266,7 @@ function makeRandomInt(min,max){
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function makeRandomUser(users) {
+function makeRandomUser(users = usersDemo) {
     //console.log(users)
     const idx = makeRandomInt(0,users.length-1);
     var minimalUser = {
@@ -331,7 +334,7 @@ function _createDemoCar1(){
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now(),
-            duration: 1000*60*60*24*7,
+            duration: 1000*60*60*24*2,
             bids: [
                 {
                     id: makeId(4),
@@ -414,7 +417,7 @@ function _createDemoCar2(){
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now(),
-            duration: 1000*60*60*24*7,
+            duration: 1000*60*60*24*1,
             bids: [
                 {
                     id: makeId(4),
@@ -497,7 +500,7 @@ function _createDemoCar3(){
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now(),
-            duration: 1000*60*60*24*7,
+            duration: 1000*60*60*24*0.5,
             bids: [
                 {
                     id: makeId(4),
@@ -580,7 +583,7 @@ function _createDemoCar4(){
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now(),
-            duration: 1000*60*60*24*7,
+            duration: 1000*60*60*24*0.2,
             bids: [
                 {
                     id: makeId(4),
@@ -663,7 +666,7 @@ function _createDemoCar5(){
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now(),
-            duration: 1000*60*60*24*7,
+            duration: 1000*60*60*1,
             bids: [
                 {
                     id: makeId(4),
@@ -746,7 +749,7 @@ function _createDemoCar6(){
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now(),
-            duration: 1000*60*60*24*7,
+            duration: 1000*60*20,
             bids: [
                 {
                     id: makeId(4),
