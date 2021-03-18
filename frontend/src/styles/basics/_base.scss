@@ -41,18 +41,43 @@ img {
 
 button {
     cursor: pointer;
+    // border: none;
+    // border-radius: 5px;
+    // padding: 5px;
+    // margin: 5px;
+    // background-color: $clr2;
+    // text-decoration: none;
+    // font-weight: 600;
+    // color: $clr1;
+    // text-align: center;
+    // &:hover {
+    //     filter: brightness(80%);
+    // }
+}
+
+button.sort-btn {
+    padding: 0;
     border: none;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 5px;
-    background-color: $clr2;
-    text-decoration: none;
-    font-weight: 600;
-    color: $clr1;
-    text-align: center;
+    width: 100px;
+    background-color: transparent;
+    font-weight: 500;
+    border-bottom: 1px solid $clr1;
+    
     &:hover {
-        filter: brightness(80%);
+        border-bottom: 2px solid $clr1;
+        margin-bottom: -1px;
     }
+    // border-radius: 5px;
+    // padding: 5px;
+    // margin: 5px;
+    // background-color: $clr2;
+    // text-decoration: none;
+    // font-weight: 600;
+    // color: $clr1;
+    // text-align: center;
+    // &:hover {
+    //     filter: brightness(80%);
+    // }
 }
 
 a {
