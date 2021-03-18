@@ -5,7 +5,6 @@
         v-model="filterBy.fromYear"
         @change="setFilter"
         placeholder="From Year"
-        size="small"
       >
         <el-option
           v-for="item in years"
@@ -21,8 +20,7 @@
       <el-select
         v-model="filterBy.toYear"
         @change="setFilter"
-        placeholder="To year"
-        size="small"
+        placeholder="To Year"
       >
         <el-option
           v-for="item in years"
@@ -40,25 +38,6 @@
         v-model="filterBy.bodyStyle"
         @change="setFilter"
         placeholder="Body style"
-        size="small"
-      >
-        <el-option
-          v-for="item in bodyStyles"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
-    </div>
-
-    <div class="flex flex-col justify-center align-center">
-      <!-- <label for="stockFilter">In stock:</label> -->
-      <el-select
-        v-model="filterBy.bodyStyle"
-        @change="setFilter"
-        placeholder="In stock:"
-        size="small"
       >
         <el-option
           v-for="item in bodyStyles"
@@ -76,7 +55,6 @@
         v-model="filterBy.manufacturer"
         @change="setFilter"
         placeholder="Manufacturers"
-        size="small"
       >
         <el-option
           v-for="item in manufacturers"
@@ -87,6 +65,9 @@
         </el-option>
       </el-select>
     </div>
+      <button @click="setFilter('ending-soon')" class="sort-btn">Ending soon</button>
+      <button @click="setFilter('newly-listed')" class="sort-btn">Newly listed</button>
+      <button @click="setFilter('lowest-mileage')" class="sort-btn">Lowest mileage</button>
   </section>
 </template>
 
@@ -108,8 +89,8 @@ export default {
         toYear: '',
         bodyStyle: '',
         manufacturer: '',
-      },
       sortBy: '',
+      },
       years: [],
       bodyStyles: [],
       manufacturers: []
@@ -131,18 +112,25 @@ export default {
   },
   methods: {
     setFilter() {
-      this.$emit('setFilter', this.filterBy)
+      console.log('this.filterBy:', this.filterBy)
+      // this.$emit('setFilter', this.filterBy)
     },
-    setSort() {
-      this.$emit('setSort', this.sortBy)
+    setSort(sortBy) {
+      this.filterBy.sortBy = sortBy
     }
   },
   created() {
     this.filterDebounce = debounce(this.setFilter, 1000);
 
     for (let i = 2021; i >= 1970; i--) {
-      this.years.push({value: i, label: i});
+      this.years.push({ value: i, label: i });
     }
+
+    const bodyStyles = ['All', 'Coupe', 'Convertible', 'Sedan', 'SUV/Crossover', 'Hatchback']
+    this.bodyStyles = bodyStyles.map(item => { return { value: item, label: item } })
+
+    const manufacturers = ["Abarth", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daewoo", "Daihatsu", "Dodge", "Donkervoort", "DS", "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai", "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM", "Lada", "Lamborghini", "Lancia", "Land Rover", "Landwind", "Lexus", "Lotus", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "MG", "Mini", "Mitsubishi", "Morgan", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Rover", "Saab", "Seat", "Skoda", "Smart", "SsangYong", "Subaru", "Suzuki", "Tesla", "Toyota", "Volkswagen", "Volvo"]
+    this.manufacturers = manufacturers.map(item => { return { value: item, label: item } })
   },
 }
 </script>
