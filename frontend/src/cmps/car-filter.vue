@@ -11,8 +11,9 @@
         range
         :min="1970"
         :max="2021"
-        show-stops="true"
+        :marks="marks"
       >
+        >
       </el-slider>
     </div>
     <!-- <el-select
@@ -78,9 +79,15 @@
         </el-option>
       </el-select>
     </div>
-      <button @click="setSort('ending-soon')" class="sort-btn">Ending soon</button>
-      <button @click="setSort('newly-listed')" class="sort-btn">Newly listed</button>
-      <button @click="setSort('lowest-mileage')" class="sort-btn">Lowest mileage</button>
+    <button @click="setSort('ending-soon')" class="sort-btn">
+      Ending soon
+    </button>
+    <button @click="setSort('newly-listed')" class="sort-btn">
+      Newly listed
+    </button>
+    <button @click="setSort('lowest-mileage')" class="sort-btn">
+      Lowest mileage
+    </button>
   </section>
 </template>
 
@@ -99,29 +106,46 @@ export default {
     return {
       filterBy: {
         year: {
-          from:0,
-          to:2021
+          from: 0,
+          to: 2021
         },
         bodyStyles: [],
         vendors: [],
-      sortBy: '',
+        sortBy: '',
       },
       years: [],
       bodyStyles: [],
-      vendors: []
+      vendors: [],
+      yearsRangeIsOpen: false,
+
+      // marks: {
+      //   1970: '1970',
+      //   2021: '2021',
+      // }
+
+
+    }
+  },
+  computed: {
+    marks() {
+
+      return {
+        1970: '1970',
+        2021: '2021',
+      }
     }
   },
   methods: {
     setFilter() {
       console.log('this.filterBy:', this.filterBy)
-      this.$store.commit({type: 'setFilter', filterBy: this.filterBy})
-      this.$store.dispatch({ type: 'loadCars'})
+      this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
+      this.$store.dispatch({ type: 'loadCars' })
       // this.$emit('setFilter', this.filterBy)
     },
     setSort(sortBy) {
       this.filterBy.sortBy = sortBy
-      this.$store.commit({type: 'setSort', sortBy: this.filterBy.sortBy})
-      this.$store.dispatch({ type: 'loadCars'})
+      this.$store.commit({ type: 'setSort', sortBy: this.filterBy.sortBy })
+      this.$store.dispatch({ type: 'loadCars' })
 
     }
   },
