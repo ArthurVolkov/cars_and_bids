@@ -91,7 +91,6 @@ export default {
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
     }, 1000);
-    console.log('car in preview', this.car);
   },
   destroyed() {
     clearInterval(this.timeLeftInterval);
