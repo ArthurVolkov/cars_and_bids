@@ -4,12 +4,12 @@ const carService = require('./car.service')
 
 async function getCars(req, res) {
     try {
-        console.log('req.query:', req.query)
+        // console.log('req.query:', req.query)
         const responce = await carService.query(req.query)
         /////////////////////////////////////////////
-        setTimeout(() => { 
+        // setTimeout(() => { 
             res.send(responce)
-        }, 500);
+        // }, 500);
         /////////////////////////////////////////////
     } catch (err) {
         logger.error('Cannot get responce (cars)', err)
@@ -20,11 +20,12 @@ async function getCars(req, res) {
 
 async function getCar(req, res) {
     try {
+        console.log('BBBBBBBBBB')
         const car = await carService.getById(req.params.id)
         ////////////////////////////////////////////
-        setTimeout(() => { 
+        // setTimeout(() => { 
             res.send(car)
-        }, 500);
+        // }, 500);
         ///////////////////////////////////////////
     } catch (err) {
         logger.error('Failed to get car', err)
@@ -53,8 +54,6 @@ async function updateCar(req, res) {
         res.status(500).send({ err: 'Failed to update car' })
     }
 }
-
-
 
 async function addCar(req, res) {
     try {

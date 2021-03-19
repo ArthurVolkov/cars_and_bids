@@ -3,15 +3,22 @@ const ObjectId = require('mongodb').ObjectId
 // const asyncLocalStorage = require('../../services/als.service')
 
 async function query(filterBy = {}) {
-    console.log('filterBy:', filterBy)
     const criteria = _buildCriteria(filterBy)
+//  const criteria = {}
     const skip = filterBy.pageIdx * filterBy.pageSize
     const limit = +filterBy.pageSize
     try {
-        const collection = await dbService.getCollection('car')
-        var cars = await collection.find(criteria).sort({ [filterBy.sortBy]: 1 }).skip(skip).limit(limit).toArray()
+        const collection = await dbService.getCollection('cars')
+        if (filterBy.sortBy === 'ending-soon'){
+            var sortBy = { 'auction.createdAt' : -1 }    
+        } else if (filterBy.sortBy === 'newly-listed') {
+            sortBy = { 'auction.createdAt' : 1 }        
+        } else if (filterBy.sortBy === 'lowest-mileage') {
+            sortBy = { 'mileage' : 1 }
+        }
+        var cars = await collection.find(criteria).sort(sortBy).skip(skip).limit(limit).toArray()
         var count = await collection.count()
-        return {cars, count}
+        return [cars, count]
     } catch (err) {
         logger.error('Cannot find car', err)
         throw err
@@ -20,7 +27,8 @@ async function query(filterBy = {}) {
 
 async function getById(carId) {
     try {
-        const collection = await dbService.getCollection('car')
+        console.log('AAAAA',carId)
+        const collection = await dbService.getCollection('cars')
         const car = await collection.findOne({ '_id': ObjectId(carId) })
         return car
     } catch (err) {
@@ -62,14 +70,17 @@ async function update(car) {
 async function add(car) {
     try {
         // peek only updatable fields!
-        const carToAdd = {
+        const carToAdd = car
+        // {
             // name: car.name,
             // price: car.price,
             // type: car.type,
             // createdAt: Date.now(),
             // inStock: true
-        }
-        const collection = await dbService.getCollection('car')
+        // }
+        //console.log('HAHA',car)
+
+        const collection = await dbService.getCollection('cars')
         await collection.insertOne(carToAdd)
         return carToAdd;
     } catch (err) {
@@ -103,21 +114,51 @@ module.exports = {
     addReview
 }
 
-
-
 function _buildCriteria(filterBy) {
     const criteria = {}
-    // if (filterBy.name) {
-    //     criteria.name = { $regex: filterBy.name, $options: 'i' }
-    // }
-    // if (filterBy.type && filterBy.type !== 'all') {
-    //     criteria.type = { $eq: filterBy.type }
-    // }
-    // if (filterBy.inStock && filterBy.inStock !== 'all') {
-    //     criteria.inStock = { $eq: JSON.parse(filterBy.inStock) }
-    // }
+    //console.log(filterBy)
+    if (filterBy.name) {
+        const txtCriteria = { $regex: filterBy.name, $options: 'i' }
+        criteria.$or = [
+            {
+                vendor: txtCriteria
+            },
+            {
+                bodyStyle: txtCriteria
+            },
+            {
+                transmission: txtCriteria
+            },
+            {
+                drivetrain: txtCriteria
+            },
+            {
+                engine: txtCriteria
+            },
+            {
+                exteriorColor: txtCriteria
+            },
+            {
+                interiorColor: txtCriteria
+            },
+            {
+                desc: txtCriteria
+            }
+        ]
+    }
+    if (filterBy.bodyStyles && filterBy.bodyStyles !== 'all') {
+        criteria.bodyStyle = { $eq: filterBy.bodyStyles }
+    }
+    if (filterBy.vendors && filterBy.vendors !== 'all') {
+        const vendors = filterBy.vendors.split(',')
+        criteria.vendor = { $in: vendors }
+    }
+    const years = filterBy.years.split(',').map(x=>+x);
+    criteria.year = { $gt: years[0], $lte: years[1] }
+    console.log(criteria)
     return criteria
 }
+
 
 
 

@@ -9,6 +9,7 @@
       <el-slider
         @change="setFilter"
         v-model="filterBy.years"
+        @change="setFilter"
         range
         :min="1970"
         :max="2021"
