@@ -7,6 +7,7 @@
     </button>
     <div v-if="yearsRangeIsOpen" class="block years-range">
       <el-slider
+        @change="setFilter"
         v-model="filterBy.years"
         range
         :min="1970"
@@ -77,17 +78,23 @@ import { carService } from "@/services/car.service.js";
 export default {
 
 
-  
+
   data() {
     return {
       filterBy: {
-        years: [1970,2021],
+        byYears: [1970, 2021],
+        year: {
+          from: 0,
+          to: 2021
+        },
+        // bodyStyles: [],
+        years: [1970, 2021],
         bodyStyles: '',
         vendors: [],
         sortBy: '',
       },
       years: [],
-      bodyStyles: carService.getBodyStyleList() ,
+      bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
       yearsRangeIsOpen: false,
     }
@@ -103,7 +110,7 @@ export default {
   },
   methods: {
     setFilter() {
-      console.log('In Car Filter',this.filterBy.vendors)
+      console.log('In Car Filter', this.filterBy.vendors)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$store.dispatch({ type: 'loadCars' })
     },

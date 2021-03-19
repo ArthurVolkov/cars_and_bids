@@ -3,15 +3,17 @@
     <router-link class="img-container" :to="'/car/details/' + car._id">
       <!-- <img :src="getImgUrl(car.imgUrls[0])" alt=""> -->
       <div class="block">
-        <el-carousel trigger="click">
-          <el-carousel-item v-for="(img, idx) in car.imgUrls" :key="idx" height="200px">
-            <img :src="getImgUrl(img)" alt="">
+        <el-carousel trigger="click" :autoplay="false">
+          <el-carousel-item
+            v-for="(img, idx) in car.imgUrls"
+            :key="idx"
+            height="200px"
+          >
+            <img :src="getImgUrl(img)" alt="" />
           </el-carousel-item>
         </el-carousel>
       </div>
-
-      </router-link
-    >
+    </router-link>
 
     <div class="bid-info flex justify-between align-center">
       <div class="flex flex-col justify-center align-center">
