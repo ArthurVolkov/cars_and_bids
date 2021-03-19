@@ -8,6 +8,7 @@
     <div v-if="yearsRangeIsOpen" class="block years-range">
       <el-slider
         v-model="filterBy.years"
+        @change="setFilter"
         range
         :min="1970"
         :max="2021"

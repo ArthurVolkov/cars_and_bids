@@ -13,14 +13,8 @@ router.get('/', log, getCars)
 router.get('/:id', getCar)
 router.put('/:id', requireAuth, requireAdmin, updateCar)
 // router.post('/:id/review', requireAuth, addReview)
-router.post('/', requireAuth, requireAdmin, addCar)
+//router.post('/', requireAuth, requireAdmin, addCar)
+router.post('/', addCar)
 router.delete('/:id', requireAuth, requireAdmin, deleteCar)
-
-
-// router.get('/', log, getCars)
-// router.get('/:id', getCar)
-// router.put('/:id',  updateCar)
-// router.post('/',  requireAuth, addCar)
-// router.delete('/:id',  requireAuth, deleteCar)
 
 module.exports = router
