@@ -106,82 +106,10 @@ async function query(filterBy) {
     var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&bodyStyles=${filterBy.bodyStyles}&vendors=${filterBy.vendors}&years=${filterBy.years}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
     const data = await httpService.get(`car${queryStr}`)
     return data
-
-    // var cars =  await storageService.query('cars');
-    // console.log('cars:', cars)
-
-    // const regex = new RegExp(filterBy.name, 'i')
-
-    // if (filterBy.bodyStyles === 'all' && filterBy.vendors[0] === 'all') {
-    //     cars = cars.filter(car => { 
-    //         return (regex.test(car.vendor) ||
-    //                 regex.test(car.bodyStyle) ||
-    //                 regex.test(car.transmission) ||
-    //                 regex.test(car.drivetrain) ||
-    //                 regex.test(car.engine) ||
-    //                 regex.test(car.exteriorColor) ||
-    //                 regex.test(car.interiorColor) ||
-    //                 regex.test(car.desc)) &&
-    //                 car.year >= filterBy.years[0] && car.year <= filterBy.years[1]
-    //     })
-    // } else if (filterBy.bodyStyles === 'all') {
-    //     cars = cars.filter(car => { 
-    //         return (regex.test(car.vendor) ||
-    //                 regex.test(car.bodyStyle) ||
-    //                 regex.test(car.transmission) ||
-    //                 regex.test(car.drivetrain) ||
-    //                 regex.test(car.engine) ||
-    //                 regex.test(car.exteriorColor) ||
-    //                 regex.test(car.interiorColor) ||
-    //                 regex.test(car.desc)) &&
-    //                 car.year >= filterBy.years[0] && car.year <= filterBy.years[1] &&
-    //                 filterBy.vendors.includes(car.vendor) 
-
-    //     })
-    // } else if (filterBy.vendors[0] === 'all') {
-    //     cars = cars.filter(car => { 
-    //         return (regex.test(car.vendor) ||
-    //                 regex.test(car.bodyStyle) ||
-    //                 regex.test(car.transmission) ||
-    //                 regex.test(car.drivetrain) ||
-    //                 regex.test(car.engine) ||
-    //                 regex.test(car.exteriorColor) ||
-    //                 regex.test(car.interiorColor) ||
-    //                 regex.test(car.desc)) &&
-    //                 car.year >= filterBy.years[0] && car.year <= filterBy.years[1] &&
-    //                 filterBy.bodyStyles === car.bodyStyle 
-    //     })   
-    // } else {
-    //     cars = cars.filter(car => { 
-    //         return (regex.test(car.vendor) ||
-    //                 regex.test(car.bodyStyle) ||
-    //                 regex.test(car.transmission) ||
-    //                 regex.test(car.drivetrain) ||
-    //                 regex.test(car.engine) ||
-    //                 regex.test(car.exteriorColor) ||
-    //                 regex.test(car.interiorColor) ||
-    //                 regex.test(car.desc)) &&
-    //                 car.year >= filterBy.years[0] && car.year <= filterBy.years[1] &&
-    //                 filterBy.vendors.includes(car.vendor) &&
-    //                 filterBy.bodyStyles === car.bodyStyle 
-    //     })
-    // }
-    // var sortCars = [...cars];
-    // if (filterBy.sortBy === 'ending-soon'){
-    //     sortCars.sort((car1,car2) => {return (car1.auction.createdAt + car1.auction.duration - Date.now())-(car2.auction.createdAt + car2.auction.duration - Date.now())})
-    // } else if (filterBy.sortBy === 'newly-listed') {
-    //     sortCart.sort((car1,car2) => {return car1.auction.createdAt - car2.auction.createdAt})
-    // } else if (filterBy.sortBy === 'lowest-mileage') {
-    //     sortCars.sort((car1,car2) => {return car1.mileage - car2.mileage})
-    // }
-
-    // const count = sortCars.length;
-    // const data = [sortCars,count]
-    // return data
 }
 
 async function getById(carId) {
-    const car = await httpService.get(`car/${id}`)
+    const car = await httpService.get(`car/${carId}`)
     console.log('car:', car)
     return car
     // const car = await storageService.get('cars',carId)

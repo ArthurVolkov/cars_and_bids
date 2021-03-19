@@ -20,6 +20,7 @@ async function getCars(req, res) {
 
 async function getCar(req, res) {
     try {
+        console.log('BBBBBBBBBB')
         const car = await carService.getById(req.params.id)
         ////////////////////////////////////////////
         // setTimeout(() => { 

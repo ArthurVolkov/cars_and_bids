@@ -27,7 +27,8 @@ async function query(filterBy = {}) {
 
 async function getById(carId) {
     try {
-        const collection = await dbService.getCollection('car')
+        console.log('AAAAA',carId)
+        const collection = await dbService.getCollection('cars')
         const car = await collection.findOne({ '_id': ObjectId(carId) })
         return car
     } catch (err) {
